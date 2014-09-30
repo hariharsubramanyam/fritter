@@ -10,6 +10,7 @@ router.post("/register", function(req, res) {
   var username = req.body.username;
   var password = req.body.password;
   var confirm_password = req.body.confirm_password;
+  res.end("Trying to register");
 });
 
 module.exports.initialize = function(_auth_manager) {
