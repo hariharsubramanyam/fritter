@@ -166,6 +166,18 @@ router.post('/login', function(req, res) {
   } // End else (i.e. the username and password are given).
 }); // End login.
 
+router.get("/user_exists/:username", function(req, res) {
+  auth_manager.check_if_user_exists(req.params.username, function(err, does_exist) {
+    if (err) {
+      invalid_request(res, "An error occurred!");
+    } else {
+      send_response(res, {
+        "does_exist": does_exist
+      });
+    }
+  }); // End check if user exists.
+}); // End username exists.
+
 module.exports.initialize = function(_auth_manager, _tweet_manager) {
   auth_manager = _auth_manager;
   tweet_manager = _tweet_manager;

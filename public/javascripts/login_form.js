@@ -22,19 +22,26 @@
       div_alert.fadeOut();
     }
 
-    register_form.submit(function(e) {
+    btn_register.click(function(e) {
       var username = reg_username.val();
       var password = reg_password.val();
       var confirm_password = reg_confirm_password.val();
+      e.preventDefault();
       if (username.length < 5) {
         show_alert("The username must be more than 5 characters");
-        e.preventDefault();
       } else if (password.length < 5) {
         show_alert("The password must be at least 5 characters");
-        e.preventDefault();
       } else if (password !== confirm_password) {
         show_alert("The passwords do not match");
-        e.preventDefault();
+      } else {
+        $.get("/api/user_exists/" + username, function(data) {
+          console.log(data.result);
+          if (data.result.does_exist) {
+            show_alert("The username is already taken, please pick another one");
+          } else {
+            register_form.submit();
+          }
+        });
       }
     });
   });
