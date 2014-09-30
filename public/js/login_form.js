@@ -1,6 +1,5 @@
 (function() {
   $(document).ready(function() {
-    console.log($.cookie('fal'));
     var register_form = $("#register_form");
     var reg_username = $("#reg_username");
     var reg_password = $("#reg_password");
@@ -11,6 +10,11 @@
     var btn_login = $("#btn_login");
     var p_alert = $("#p_alert");
     var div_alert = $("#div_alert");
+    var authenticator = new Fritter.Authenticator();
+    authenticator.login("harihar", "test", function(err, session_id) {
+      if (err) console.log(err);
+      console.log(session_id);
+    });
 
     var show_alert = function(message) {
       p_alert.text(message);
