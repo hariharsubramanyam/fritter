@@ -3,19 +3,23 @@
   <head>
     <title>Fritter</title>
     <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css' />
   </head>
   <body>
     <h1>Welcome to Fritter</h1>
     <form method="post" action="register">
       <input type="text" id="reg_username" name="username" placeholder="username">
-      <input type="text" id="reg_password" name="password" placeholder="password">
-      <input type="text" id="reg_confirm_password" name="confirm_password" placeholder="re-enter password">
-      <button id="btn_register" type="submit">Register</button>
+      <input type="password" id="reg_password" name="password" placeholder="password">
+      <input type="password" id="reg_confirm_password" name="confirm_password" placeholder="re-enter password">
+      <button class="btn btn-primary" id="btn_register" type="submit">Register</button>
     </form>
     <div>
       <input type="text" id="log_username" placeholder="username">
-      <input type="text" id="log_password" placeholder="password">
-      <button id="btn_login">Login</button>
+      <input type="password" id="log_password" placeholder="password">
+      <button class="btn btn-primary" id="btn_login">Login</button>
     </div>
+    <script src="/javascripts/jquery.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <script src="/javascripts/login_form.js"></script>
   </body>
 </html>
