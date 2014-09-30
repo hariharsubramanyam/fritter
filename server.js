@@ -15,10 +15,9 @@ var auth_manager = new require("./util/auth").AuthManager(mongoose, constants.SA
 var tweet_manager = new require("./util/tweet_manager").TweetManager(mongoose, auth_manager);
 
 
-var index = require('./routes/index');
+var index = require('./routes/index').initialize(auth_manager);
 var api = require('./routes/api').initialize(auth_manager, tweet_manager);
-var tweets = require("./routes/tweets").initialize(auth_manager, tweet_manager);
-var user_list = require('./routes/user_list');
+var login_register = require("./routes/login_register").initialize(auth_manager);
 
 var app = express();
 
@@ -35,8 +34,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', index);
 app.use('/api', api);
-app.use("/tweets", tweets);
-app.use("/user_list", user_list);
+app.use('/login', login_register);
 
 /// catch 404 and forward to error handler
 app.use(function(req, res, next) {
