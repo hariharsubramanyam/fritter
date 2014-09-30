@@ -1,5 +1,6 @@
 (function() {
   $(document).ready(function() {
+    console.log($.cookie());
     var register_form = $("#register_form");
     var reg_username = $("#reg_username");
     var reg_password = $("#reg_password");
