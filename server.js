@@ -68,5 +68,5 @@ app.use(function(err, req, res, next) {
 });
 
 app.listen(port, ipaddress, function() {
-            console.log('%s: Node server started on %s:%d ...', Date(Date.now() ), ipaddress, port);
+  console.log('%s: Node server started on %s:%d ...', Date(Date.now() ), ipaddress, port);
 });

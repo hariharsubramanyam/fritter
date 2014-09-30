@@ -40,9 +40,17 @@
             show_alert("The username is already taken, please pick another one");
           } else {
             register_form.submit();
-          }
-        });
-      }
+          } // End else (i.e. submit the form).
+        }); // End user_exists callback
+      } // End else (i.e. the username and passwords are correctly formatted)
+    }); // End register button click.
+
+    btn_login.click(function(e) {
+      var username = log_username.val();
+      var password = log_password.val();
+      e.preventDefault();
+       
     });
-  });
-})();
+
+  }); // End document ready.
+})(); // End closure.

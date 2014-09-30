@@ -166,6 +166,23 @@ router.post('/login', function(req, res) {
   } // End else (i.e. the username and password are given).
 }); // End login.
 
+/**
+ * Checks whether a username exists.
+ *
+ * @param req - The request. The username is extracted from the URL.
+ * @param res - The response. If there is an error, we return:
+ *
+ * {
+ *  error: "An error occurred!"
+ * }
+ *
+ * Otherwise, we return
+ *
+ * {
+ *  error: null,
+ *  does_exist: whether the username exists
+ * }
+ */
 router.get("/user_exists/:username", function(req, res) {
   auth_manager.check_if_user_exists(req.params.username, function(err, does_exist) {
     if (err) {
