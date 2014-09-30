@@ -1,19 +1,18 @@
 {
-  "name": "OpenShift-Sample-App",
+  "name": "Harihar-Fritter",
   "version": "1.0.0",
-  "description": "OpenShift Sample Application",
+  "description": "Twitter Clone",
   "keywords": [
-    "OpenShift",
+    "Twitter",
     "Node.js",
-    "application",
-    "openshift"
+    "Social",
+    "Harihar"
   ],
   "author": {
-    "name": "OpenShift",
-    "email": "ramr@example.org",
-    "url": "http://www.openshift.com/"
+    "name": "Harihar Subramanyam",
+    "email": "hsubrama@mit.edu",
+    "url": "https://github.com/hariharsubramanyam/"
   },
-  "homepage": "http://www.openshift.com/",
   "repository": {
     "type": "git",
     "url": "https://github.com/openshift/origin-server"
@@ -25,7 +24,17 @@
   },
 
   "dependencies": {
-    "express": "~3.4.4"
+    "express": "~4.2.0",
+    "static-favicon": "~1.0.0",
+    "morgan": "~1.0.0",
+    "cookie-parser": "~1.0.1",
+    "body-parser": "~1.0.0",
+    "debug": "~0.7.4",
+    "ejs": "~0.8.5",
+    "mongoose": "~3.8.16",
+    "bcrypt": "~0.8.0",
+    "async": "~0.9.0",
+    "chai": "~1.9.1"
   },
   "devDependencies": {},
   "bundleDependencies": [],
