@@ -195,6 +195,15 @@ router.get("/user_exists/:username", function(req, res) {
   }); // End check if user exists.
 }); // End username exists.
 
+router.post("/is_valid_session", function(req, res) {
+  var session_id = req.body.session_id;
+  if (session_id === undefined) {
+    invalid_request(res, "There is no session_id in the POST body.");
+  } else {
+    auth_manager.validate_session(
+  } // End else (
+}); // End is_valid_session.
+
 module.exports.initialize = function(_auth_manager, _tweet_manager) {
   auth_manager = _auth_manager;
   tweet_manager = _tweet_manager;
