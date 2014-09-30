@@ -1,5 +1,6 @@
 (function() {
   $(document).ready(function() {
+    var register_form = $("#register_form");
     var reg_username = $("#reg_username");
     var reg_password = $("#reg_password");
     var reg_confirm_password = $("#reg_confirm_password");
@@ -21,9 +22,7 @@
       div_alert.fadeOut();
     }
 
-    return;
-    btn_register.submit(function(e) {
-      console.log("Clicked");
+    register_form.submit(function(e) {
       var username = reg_username.val();
       var password = reg_password.val();
       var confirm_password = reg_confirm_password.val();
