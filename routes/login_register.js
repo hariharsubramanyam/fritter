@@ -9,7 +9,14 @@ router.get('/form', function(req, res) {
 router.post("/register", function(req, res) {
   var username = req.body.username;
   var password = req.body.password;
-  res.end(JSON.stringify(req.body));
+  auth_manager.register_user(username, password, function(err, session_id) {
+    if (err) {
+      res.redirect("form");
+    } else {
+      res.cookie("session_id", session_id);
+      res.end(session_id);
+    }
+  });
 });
 
 module.exports.initialize = function(_auth_manager) {
