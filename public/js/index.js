@@ -90,6 +90,19 @@
             }); // End register.
           } // End else (i.e. usernames and passwords are good).
         }); // End register click handler.
+
+        btn_login.click(function() {
+          var username = log_username.val();
+          var password = log_password.val();
+          authenticator.login(username, password, function(err, session_id) {
+            if (err) {
+              display_modal_alert(err);
+            } else {
+                $("#loginModal").modal("hide");
+                callback(null);
+            } // End else (no error).
+          }); // End login.
+        }); // End login click handler.
       } // End else (i.e. there is no session id)
     }); // End has_session_id
   }; // End display_modal_if_needed
