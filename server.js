@@ -20,6 +20,7 @@ var logout_route = require('./routes/logout').initialize(mongoose);
 var register_route = require('./routes/register').initialize(mongoose);
 var validate_session_route = require('./routes/validate_session').initialize(mongoose);
 var make_tweet_route = require('./routes/make_tweet').initialize(mongoose);
+var get_all_tweets_route = require('./routes/get_all_tweets').initialize(mongoose);
 
 var app = express();
 
@@ -39,6 +40,7 @@ app.use('/auth', logout_route);
 app.use('/auth', register_route);
 app.use('/auth', validate_session_route);
 app.use('/tweets', make_tweet_route);
+app.use('/tweets', get_all_tweets_route);
 
 /// catch 404 and forward to error handler
 app.use(function(req, res, next) {
