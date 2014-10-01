@@ -10,7 +10,7 @@
       if (session_id === undefined) {
         callback(false);
       } else {
-        $.post("/api/is_valid_session", {
+        $.post("/api/auth/validate_session", {
           "session_id": session_id 
         }, function(data) {
           if (data.err) {

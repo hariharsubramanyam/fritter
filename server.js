@@ -11,9 +11,6 @@ var bodyParser = require('body-parser');
 var constants = require("./models/constants");
 var mongoose = require("mongoose");
 mongoose.connect(process.env.OPENSHIFT_MONGODB_DB_URL || constants.MONGO_URL);
-var auth_manager = new require("./util/auth").AuthManager(mongoose, constants.SALT);
-var tweet_manager = new require("./util/tweet_manager").TweetManager(mongoose, auth_manager);
-
 
 var login_route = require('./routes/login').initialize(mongoose);
 var logout_route = require('./routes/logout').initialize(mongoose);
