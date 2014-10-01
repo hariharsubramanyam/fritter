@@ -260,11 +260,56 @@ router.post("/logout", function(req, res) {
   } // End else (i.e. session_id is defined).
 }); // End logout.
 
+/**
+ *  Make a tweet.
+ *
+ *  @param req - Contains a session_id and a tweet (the text content).
+ *
+ *  Returns
+ *  {
+ *    error: null,
+ *    result: "Success"
+ *  }
+ */
+router.post("/tweets/make", function(req, res) {
+  var session_id = req.body.session_id;
+  var tweet = req.body.tweet;
+  if (tweet === undefined) {
+    invalid_request(res, "There is no tweet in the POST body.");
+  } else if (session_id === undefined) {
+    invalid_request(res, "There is no session_id in the POST body.");
+  } else {
+    auth_manager.get_username_for_session_id(session_id, function(err, username) {
+      if (err) invalid_request(res, "An error occured in validating the session id");
+      tweet.make_tweet(username, tweet, function(err, tweet_id) {
+        send_response(res, "Success");
+      }); // End make_tweet.
+    }); // End get username for session_id.
+  } // End else (i.e. session_id is defined).
+}); // End make_tweet.
+
+/**
+ * Returns all the tweets after a given date.
+ *
+ * @param req - Contains a date
+ */
+router.post("/tweets/after", function(req, res) {
+});
+
+/**
+ * Returns all the tweets.
+ * {
+ *  error: null,
+ *  result: [...]
+ * }
+ */
 router.get("/tweets", function(req, res) {
   tweet_manager.get_tweets(function(err, results) { 
     send_response(res, results);
   }); // End get_tweets.
 }); // End get tweets.
+
+
 
 module.exports.initialize = function(_auth_manager, _tweet_manager) {
   auth_manager = _auth_manager;

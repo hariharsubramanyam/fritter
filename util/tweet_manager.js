@@ -118,7 +118,38 @@ var TweetManager = function(mongoose, authManager) {
       if (err) throw err;
       callback(null, results);
     }); // End find.
-  }; // End get_tweets.
+  }; // End get_tweets
+
+  /**
+   * Gets the tweet with the given id.
+   *
+   * @param tweet_id - The ID of the tweet to get.
+   * @param callback - Called as callback(err, tweet).
+   */
+  var get_tweet_for_id = function(tweet_id, callback) {
+    var tweet_object_id = new mongoose.Types.ObjectId(tweet_id);
+    Tweet.find({"_id": tweet_object_id}, function(err, results) {
+      if (err) throw err;
+      if (results.length === 0) {
+        callback(new Error("No tweet with the given ID"));
+      } else {
+        callback(null, results[0]);
+      } // End else (i.e. the results are returned).
+    }); // End find.
+  } // End get_tweet_for_id.
+
+  /**
+   * Returns all the tweets after a given date.
+   *
+   * @param date
+   * @param callback - Called as callback(err, tweets).
+   */
+  var get_tweets_after_date = function(date, callback) {
+    Tweet.find({"created" : {"$gte": date}}, function(err, results) {
+      if (err) throw err;
+      callback(null, results);
+    }); // End find.
+  }); // End get_tweets_after_date
 
   var that = {}; 
   that.get_tweets = get_tweets;
