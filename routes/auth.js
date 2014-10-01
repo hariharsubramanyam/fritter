@@ -2,6 +2,7 @@ var express = require("express");
 var async = require("async");
 var UserAuth = require("../models/user_auth").UserAuth;
 var Session = require("../models/session").Session;
+var Tweet = require("../models/tweet").Tweet;
 var constants = require("../models/constants");
 var route_helper = require("./route_helper");
 var send_error = route_helper.send_error;
