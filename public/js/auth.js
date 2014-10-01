@@ -7,17 +7,19 @@
      */
     var has_valid_session = function(callback) {
       var session_id = $.cookie("session_id");
-      if (sesion_id === undefined) {
+      if (session_id === undefined) {
         callback(false);
       } else {
-        $.get("/api/is_valid_session", function(data) {
+        $.post("/api/is_valid_session", {
+          "session_id": session_id 
+        }, function(data) {
           if (data.err) {
             console.log(data.err);
           } else {
             callback(data.result.is_valid);
           } // End else (i.e. no error)
         }); // End async call.
-      } // End else (i.e. the sesion_id is valid)
+      } // End else (i.e. the session_id is valid)
     }; // End has_valid_session.
 
     /**

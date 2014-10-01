@@ -1,4 +1,52 @@
 (function() {
+    var reg_username;
+    var reg_password;
+    var reg_confirm_password;
+    var btn_register;
+    var log_username;
+    var log_password;
+    var btn_login;
+    var p_alert;
+    var div_alert; 
+    var login_modal;
+    var authenticator = new Fritter.Authenticator();
+
+  $(document).ready(function() {
+    async.series([
+      setup_variables,
+      display_modal_if_needed,
+      function(callback) {
+        console.log("done!")
+      } // 
+    ]); // End async series.
+  }); // End document ready.
+
+
+  var setup_variables= function(callback) {
+    reg_username = $("#reg_username");
+    reg_password = $("#reg_password");
+    reg_confirm_password = $("#reg_confirm_password");
+    btn_register = $("#btn_register");
+    log_username = $("#log_username");
+    log_password = $("#log_password");
+    btn_login = $("#btn_login");
+    p_alert = $("#p_alert");
+    div_alert = $("#div_alert");
+    callback(null);
+  }; 
+
+  var display_modal_if_needed = function(callback) {
+    authenticator.has_session_id(function(has_session_id) {
+      if (has_session_id) {
+        console.log("has session_id");
+        callback(null);;
+      } else {
+        $("#loginModal").modal({keyboard: false, backdrop: 'static'});
+      }
+    });
+  };
+
+/**
   $(document).ready(function() {
     var register_form = $("#register_form");
     var reg_username = $("#reg_username");
@@ -11,9 +59,8 @@
     var p_alert = $("#p_alert");
     var div_alert = $("#div_alert");
     var authenticator = new Fritter.Authenticator();
-    authenticator.login("harihar", "test", function(err, session_id) {
-      if (err) console.log(err);
-      console.log(session_id);
+    $.get("/html/login_modal.html", function(data) {
+      console.log(data);
     });
 
     var show_alert = function(message) {
@@ -58,4 +105,5 @@
     });
 
   }); // End document ready.
+  */
 })(); // End closure.

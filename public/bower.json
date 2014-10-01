@@ -3,6 +3,7 @@
   "dependencies": {
     "jquery": "*",
     "bootstrap": "*",
-    "jquery-cookie": "*"
+    "jquery-cookie": "*",
+    "async": "~0.9.0"
   }
 }
