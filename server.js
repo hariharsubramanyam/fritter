@@ -15,8 +15,10 @@ var auth_manager = new require("./util/auth").AuthManager(mongoose, constants.SA
 var tweet_manager = new require("./util/tweet_manager").TweetManager(mongoose, auth_manager);
 
 
-var api = require('./routes/api').initialize(auth_manager, tweet_manager);
-var auth_route = require('./routes/auth').initialize(mongoose);
+var login_route = require('./routes/login').initialize(mongoose);
+var logout_route = require('./routes/logout').initialize(mongoose);
+var register_route = require('./routes/register').initialize(mongoose);
+var validate_session = require('./routes/validate_session').initialize(mongoose);
 
 var app = express();
 
@@ -31,8 +33,10 @@ app.use(bodyParser.urlencoded());
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/api', api);
-app.use('/auth', auth_route);
+app.use('/auth', login_route);
+app.use('/auth', logout_route);
+app.use('/auth', register_route);
+app.use('/auth', validate_session);
 
 /// catch 404 and forward to error handler
 app.use(function(req, res, next) {
