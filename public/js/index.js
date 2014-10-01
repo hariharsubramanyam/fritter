@@ -71,7 +71,7 @@
           } else {
             authenticator.register(username, password, function(err, session_id) {
               if (err) {
-                display_modal_alert(err.message);
+                display_modal_alert(err);
               } else {
                 $("#loginModal").modal("hide");
                 callback(null);

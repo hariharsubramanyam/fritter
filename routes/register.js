@@ -12,7 +12,10 @@ var mongoose;
 
 /**
  * @param req - The body must include username and password field.
- * @param res - The result is the session_id
+ * @param res - Result is {
+ *  error: An error or null,
+ *  result: The session_id.
+ * }
  */
 router.post("/register", function(req, res) {
   async.waterfall([
