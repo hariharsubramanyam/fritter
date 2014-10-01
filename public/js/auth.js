@@ -29,7 +29,7 @@
      * @param username
      * @param password
      * @param callback - Executed as callback(err, session_id) where err is either null or
-     *                   an object of the form {reason: <number>, message: <string>}
+     *                   an error message.
      */
     var register = function(username, password, callback) {
       $.post("/auth/register", {
@@ -53,7 +53,7 @@
      * @param username
      * @param password
      * @param callback - Executed as callback(err, session_id) where err is either null or
-     *                   an object of the form {reason: <number>, message: <string>}
+     *                   an error message.
      */
     var login = function(username, password, callback) {
       $.post("/auth/login", {
@@ -70,10 +70,30 @@
       }); // End post call.
     }; // End register.
 
+    /**
+     * Attempts to logout the user.
+     *
+     * @param callback - Executed as callback(err) where err is either null or an error message.
+     */
+    var logout = function(callback) {
+      var session_id = $.cookie("session_id");
+      $.post("/auth/logout", {
+        "session_id": session_id
+      }, function(data) {
+        if (data.error) {
+         callback(data.error); 
+        } else {
+          $.removeCookie("session_id");
+          callback(null);
+        } // End else (i.e. the user successfully logged out)
+      }); // End post call.
+    }; // End logout.
+
     var that = {};
-    that.has_session_id= has_valid_session;
+    that.has_session_id = has_valid_session;
     that.register = register;
     that.login = login;
+    that.logout = logout;
     return that;
   }; // End Authenticator class.
 
