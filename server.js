@@ -16,6 +16,7 @@ var tweet_manager = new require("./util/tweet_manager").TweetManager(mongoose, a
 
 
 var api = require('./routes/api').initialize(auth_manager, tweet_manager);
+var auth_route = require('./routes/auth').initialize(mongoose);
 
 var app = express();
 
@@ -31,6 +32,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/api', api);
+app.use('/auth', auth_route);
 
 /// catch 404 and forward to error handler
 app.use(function(req, res, next) {

@@ -138,18 +138,6 @@ var TweetManager = function(mongoose, authManager) {
     }); // End find.
   } // End get_tweet_for_id.
 
-  /**
-   * Returns all the tweets after a given date.
-   *
-   * @param date
-   * @param callback - Called as callback(err, tweets).
-   */
-  var get_tweets_after_date = function(date, callback) {
-    Tweet.find({"created" : {"$gte": date}}, function(err, results) {
-      if (err) throw err;
-      callback(null, results);
-    }); // End find.
-  }); // End get_tweets_after_date
 
   var that = {}; 
   that.get_tweets = get_tweets;
