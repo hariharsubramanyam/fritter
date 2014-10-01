@@ -260,6 +260,12 @@ router.post("/logout", function(req, res) {
   } // End else (i.e. session_id is defined).
 }); // End logout.
 
+router.get("/tweets", function(req, res) {
+  tweet_manager.get_tweets(function(err, results) { 
+    send_response(res, results);
+  }); // End get_tweets.
+}); // End get tweets.
+
 module.exports.initialize = function(_auth_manager, _tweet_manager) {
   auth_manager = _auth_manager;
   tweet_manager = _tweet_manager;

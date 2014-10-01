@@ -10,6 +10,8 @@
     var div_alert; 
     var login_modal;
     var modal_alert_timeout;
+    var txt_tweet;
+    var btn_make_tweet;
     var authenticator = new Fritter.Authenticator();
 
   $(document).ready(function() {
@@ -33,6 +35,9 @@
     btn_login = $("#btn_login");
     p_alert = $("#p_alert");
     div_alert = $("#div_alert");
+    txt_tweet = $("#txt_tweet");
+    txt_tweet.val("");
+    btn_make_tweet = $("#btn_make_tweet");
     callback(null);
   }; 
 

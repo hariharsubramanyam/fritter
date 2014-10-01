@@ -1,5 +1,4 @@
-var constants = require("../models/constants");
-var Tweet = require("../models/tweet").Tweet;
+var constants = require("../models/constants"); var Tweet = require("../models/tweet").Tweet;
 /**
  * This is the API used to make tweets.
  *
@@ -90,7 +89,7 @@ var TweetManager = function(mongoose, authManager) {
    *                   }
    */
   var get_tweets_for_user = function(username, callback) {
-    Tweet.find({"username": username}, function(err, results) {
+    Tweet.find({"username": username}).sort("-created").exec(function(err, results) {
       if (err) throw err;
       if (results.length == 0) {
         callback(new Error("The username does not exist"));
@@ -100,7 +99,29 @@ var TweetManager = function(mongoose, authManager) {
     }); // End find tweets.
   }; // End get_tweets_for_user.
 
+  /**
+   * Gets all the tweets.
+   *
+   * @param callback - The callback to execute. It will be executed as callback(err, tweets). The
+   *                   err object is null if there is no error. Otherwise, err is an Error object
+   *                   The tweets is an array of objects of the form:
+   *                   {
+   *                      _id: a MongoDB ObjectId indicating the tweet id. To convert it to a 
+   *                           String, you must call the toString() function on it.
+   *                      username: a String indicating the username
+   *                      created: a Date indicating when the tweet was made
+   *                      content: a String indicating the body of the tweet
+   *                   }
+   */
+  var get_tweets = function(callback) {
+    Tweet.find({}).sort("-created").exec(function(err, results) {
+      if (err) throw err;
+      callback(null, results);
+    }); // End find.
+  }; // End get_tweets.
+
   var that = {}; 
+  that.get_tweets = get_tweets;
   that.make_tweet = make_tweet;
   that.edit_tweet = edit_tweet;
   that.delete_tweet = delete_tweet;
