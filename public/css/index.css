@@ -1,0 +1,14 @@
+#logoutLink {
+  float: right; 
+  margin-right: 10px; 
+  margin-top: 20px;
+}
+
+#txt_tweet {
+  display: inline-block;
+  margin-right: 10px;
+}
+
+#btn_make_tweet {
+  margin-bottom: 50px;
+}

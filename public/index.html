@@ -3,26 +3,33 @@
   <head>
     <title>Fritter</title>
     <link rel='stylesheet' href='/bower_components/bootstrap/dist/css/bootstrap.min.css'/>
+    <link rel='stylesheet' href='/css/index.css'/>
   </head>
   <body>
-    <div id="test">
+    <div class="container">
+      <div id="logoutRow" class="row">
+        <a id="logoutLink">Logout</a>
+      </div>
+      <div id="titleRow" class="row">
+        <h1>hsubrama</h1>
+      </div>
+      <div class="row">
+        <textarea id="txt_tweet" rows="2" cols="70" maxlength="140" class="form-input col-md-8" placeholder="Enter Tweet...">
+        </textarea>
+        <button id="btn_make_tweet" class="btn btn-success">Make Tweet</button>
+      </div>
+      <ul style="list-style:none">
+        <li><strong>Test:</strong> This is a tweet
+        <a>delete</a>
+        </li>
+        <li><strong>Test:</strong> This is a tweet
+        <a>delete</a>
+        </li>
+        <li><strong>Test:</strong> This is a tweet
+        <a>delete</a>
+        </li>
+      </ul>
     </div>
-    <h1>Harihar</h1>
-    <div>
-      <input type="text">
-      <button>Make Tweet</button>
-    </div>
-    <ul style="list-style:none">
-      <li><strong>Test:</strong> This is a tweet
-      <a>delete</a>
-      </li>
-      <li><strong>Test:</strong> This is a tweet
-      <a>delete</a>
-      </li>
-      <li><strong>Test:</strong> This is a tweet
-      <a>delete</a>
-      </li>
-    </ul>
 
     <div class="modal fade" data-backdrop="static" id="loginModal">
       <div class="modal-dialog">

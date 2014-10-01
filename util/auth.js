@@ -200,6 +200,25 @@ var AuthManager = function(mongoose, salt) {
     }); // End find session.
   }; // End get_username_for_session_id.
 
+  /*
+   * Logs a user out by deleting their session
+   *
+   * @param session_id - A String indicating the session id.
+   * @param callback - The function to execute. It is called as callback(err). If err is
+   *                   null, then there is no error. Otherwise, it is an Error object which means 
+   *                   that there is no session with the given id.                   
+   */
+  var logout_user = function(session_id, callback) {
+    Session.remove({"_id": new mongoose.Types.ObjectId(session_id)}, function(err, results) {
+      if (err) throw err;
+      if (results.length == 0) {
+        callback(new Error("There is no username with that session_id"));
+      } else {
+        callback(null);
+      } // End else (i.e. the session is found).
+    }); // End find session.
+  }; // End logout user.
+
   var that = {};
   that.create_session = create_session;
   that.register_user = register_user;
@@ -208,6 +227,7 @@ var AuthManager = function(mongoose, salt) {
   that.check_if_user_exists = check_if_user_exists;
   that.clear_all_data = clear_all_data;
   that.get_username_for_session_id = get_username_for_session_id;
+  that.logout_user = logout_user;
   return that;
 }; // End AuthManager class.
 
