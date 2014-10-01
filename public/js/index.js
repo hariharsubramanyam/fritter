@@ -9,6 +9,7 @@
     var p_alert;
     var div_alert; 
     var login_modal;
+    var modal_alert_timeout;
     var authenticator = new Fritter.Authenticator();
 
   $(document).ready(function() {
@@ -22,7 +23,7 @@
   }); // End document ready.
 
 
-  var setup_variables= function(callback) {
+  var setup_variables = function(callback) {
     reg_username = $("#reg_username");
     reg_password = $("#reg_password");
     reg_confirm_password = $("#reg_confirm_password");
@@ -35,6 +36,15 @@
     callback(null);
   }; 
 
+  var display_modal_alert = function(message) {
+    p_alert.text(message);
+    clearTimeout(modal_alert_timeout);
+    div_alert.css("visibility", "visible");
+    modal_alert_timeout = setTimeout(function() {
+      div_alert.css("visibility", "hidden");
+    }, 5000);
+  };
+
   var display_modal_if_needed = function(callback) {
     authenticator.has_session_id(function(has_session_id) {
       if (has_session_id) {
@@ -42,6 +52,15 @@
         callback(null);;
       } else {
         $("#loginModal").modal({keyboard: false, backdrop: 'static'});
+        div_alert.css("visibility", "hidden");
+        btn_register.click(function() { 
+          var username = reg_username.val();
+          var password = reg_password.val();
+          var confirm_password = reg_confirm_password.val();
+          if (username.length < 5) {
+            display_modal_alert("The username must be 5 or more characters!");
+          }
+        });
       }
     });
   };
