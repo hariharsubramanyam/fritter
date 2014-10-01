@@ -59,11 +59,24 @@
           var confirm_password = reg_confirm_password.val();
           if (username.length < 5) {
             display_modal_alert("The username must be 5 or more characters!");
-          }
-        });
-      }
-    });
-  };
+          } else if (password.length < 5) {
+            display_modal_alert("The password must be at least 5 characters");
+          } else if (password !== confirm_password) {
+            display_modal_alert("The passwords do not match");
+          } else {
+            authenticator.register(username, password, function(err, session_id) {
+              if (err) {
+                display_modal_alert(err.message);
+              } else {
+                $("#loginModal").modal("hide");
+                callback(null);
+              } // end else (no error);
+            }); // End register.
+          } // End else (i.e. usernames and passwords are good).
+        }); // End register click handler.
+      } // End else (i.e. there is no session id)
+    }); // End has_session_id
+  }; // End display_modal_if_needed
 
 /**
   $(document).ready(function() {
