@@ -12,7 +12,12 @@ var mongoose;
 
 /**
  * @param req - Must contain a session_id in body
- * @param res - result is true (if session exists) or false.
+ * @param res - Returns
+ *
+ * {
+ *  error: An error or null if there is no error.
+ *  result: The username associated with this session.
+ * }
  */
 router.post("/validate_session", function(req, res) {
   async.waterfall([
@@ -30,7 +35,11 @@ router.post("/validate_session", function(req, res) {
       try {
         Session.find({"_id": new mongoose.Types.ObjectId(session_id)}, function(err, results) {
           if (err) send_error(res, err);
-          send_response(res, (results.length > 0));
+          if (results.length == 0) {
+            send_error(res, "There is no session!");
+          } else {
+            send_response(res, results[0].username);
+          }
         });
       } catch(err) {
         send_error(res, "Error in searching for session_id");

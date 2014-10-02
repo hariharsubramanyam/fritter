@@ -1,11 +1,12 @@
 (function() {
   var Authenticator = function() {
+    var username;
     /**
      * Determines if we have a valid session id.
      *
      * @param callback - Executed as callback(has_session_id).
      */
-    var has_valid_session = function(callback) {
+    var has_session_id = function(callback) {
       var session_id = $.cookie("session_id");
       if (session_id === undefined) {
         callback(false);
@@ -14,14 +15,15 @@
           "session_id": session_id 
         }, function(data) {
           data = JSON.parse(data);
-          if (data.err) {
-            console.log(data.err);
+          if (data.error) {
+            callback(false);
           } else {
-            callback(data.result);
+            username = data.result;
+            callback(true);
           } // End else (i.e. no error)
         }); // End async call.
       } // End else (i.e. the session_id is valid)
-    }; // End has_valid_session.
+    }; // End has_session_id.
 
     /**
      * Attempts to register the user.
@@ -89,11 +91,16 @@
       }); // End post call.
     }; // End logout.
 
+    var get_username = function() {
+      return username;
+    };
+
     var that = {};
-    that.has_session_id = has_valid_session;
+    that.has_session_id = has_session_id;
     that.register = register;
     that.login = login;
     that.logout = logout;
+    that.get_username = get_username;
     return that;
   }; // End Authenticator class.
 

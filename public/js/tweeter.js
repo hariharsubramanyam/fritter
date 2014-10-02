@@ -1,6 +1,7 @@
 (function() {
   var Tweeter = function() {
     var last_update_time = null;
+    var tweet_for_id = {};
 
     /**
      * Makes a tweet.
@@ -38,6 +39,9 @@
             callback(data.error)
           } else {
             last_update_time = new Date(); 
+            for (var i = 0; i < data.result.length; i++) {
+              tweet_for_id[data.result[i]._id.toString()] = data.result[i];
+            }
             callback(null, data.result);
           }
         });
@@ -48,15 +52,29 @@
             callback(data.error);
           } else {
             last_update_time = new Date(); 
+            for (var i = 0; i < data.result.length; i++) {
+              tweet_for_id[data.result[i]._id.toString()] = data.result[i];
+            }
             callback(null, data.result);
           }
         });
       }
     }; 
 
+    /**
+     * Return tweet for id (or undefined if the id does not exist).
+     */
+    var get_tweet_for_id = function(id) {
+      return tweet_for_id[id];
+    };
+
+    var is_my_tweet = function(id) {
+    };
+
     var that = {};
     that.make_tweet = make_tweet;
     that.get_latest_tweets = get_latest_tweets;
+    that.get_tweet_for_id = get_tweet_for_id;
     return that;
   };
 

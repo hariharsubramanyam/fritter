@@ -52,6 +52,13 @@
     callback(null);
   }; 
 
+  var load_tweets = function(callback) {
+    tweeter.get_latest_tweets(function(err, results) {
+      console.log(results);
+      callback(null);
+    });
+  };
+
   var setup_handlers = function(callback) {
     btn_logout.click(function(e) {
       authenticator.logout(function(err) {
@@ -84,7 +91,6 @@
   var display_modal_if_needed = function(callback) {
     authenticator.has_session_id(function(has_session_id) {
       if (has_session_id) {
-        console.log("has session_id");
         callback(null);;
       } else {
         $("#loginModal").modal({keyboard: false, backdrop: 'static'});
