@@ -12,3 +12,11 @@
 #btn_make_tweet {
   margin-bottom: 50px;
 }
+
+#tweet_list {
+  list-style: none;
+}
+
+#tweet_list > li {
+  font-size:30px;
+}

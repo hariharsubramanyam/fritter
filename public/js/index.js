@@ -14,6 +14,7 @@
     var txt_tweet;
     var btn_make_tweet;
     var authenticator = new Fritter.Authenticator();
+    var tweeter = new Fritter.Tweeter();
 
   $(document).ready(function() {
     async.series([
@@ -54,6 +55,14 @@
         }
       });
     });
+
+    btn_make_tweet.click(function(e) {
+      tweeter.make_tweet(txt_tweet.val(), function(err, tweet) {
+        if (err) console.log(err);
+        console.log(tweet);
+      });
+    });
+    callback(null);
   };
 
   var display_modal_alert = function(message) {
