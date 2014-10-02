@@ -17,6 +17,13 @@
     var tweeter = new Fritter.Tweeter();
 
   $(document).ready(function() {
+    tweeter.get_latest_tweets(function(err, results) {
+      if (err) {
+        console.log(err);
+      } else {
+        console.log(results);
+      }
+    });
     async.series([
       setup_variables,
       display_modal_if_needed,

@@ -13,6 +13,12 @@ var mongoose;
 
 /**
  * Returns all the tweets sorted by date.
+ *
+ * @param res - Returns 
+ * {
+ *  error: the error, or null if there is no error.
+ *  result: [...] (the array of tweet objects)
+ * }
  */
 router.get("/all", function(req, res) {
   async.waterfall([
