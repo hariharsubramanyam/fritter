@@ -12,6 +12,7 @@ var constants = require("./models/constants");
 var mongoose = require("mongoose");
 mongoose.connect(process.env.OPENSHIFT_MONGODB_DB_URL || constants.MONGO_URL);
 
+// These are all the routes I've defined.
 var login_route = require('./routes/login').initialize(mongoose);
 var logout_route = require('./routes/logout').initialize(mongoose);
 var register_route = require('./routes/register').initialize(mongoose);
@@ -35,6 +36,7 @@ app.use(bodyParser.urlencoded());
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+// This is where all the routes are set up.
 app.use('/auth', login_route);
 app.use('/auth', logout_route);
 app.use('/auth', register_route);

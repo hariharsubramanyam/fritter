@@ -1,3 +1,4 @@
+// This file defines a basic route template which should be used when creating new routes.
 var express = require("express");
 var async = require("async");
 var UserAuth = require("../models/user_auth").UserAuth;

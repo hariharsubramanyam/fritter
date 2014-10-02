@@ -1,3 +1,5 @@
+// This file defines a route for getting the tweets since a date.
+
 var express = require("express");
 var async = require("async");
 var UserAuth = require("../models/user_auth").UserAuth;

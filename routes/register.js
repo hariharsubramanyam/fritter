@@ -1,3 +1,4 @@
+// This file defines a route for registering a user.
 var express = require("express");
 var async = require("async");
 var UserAuth = require("../models/user_auth").UserAuth;

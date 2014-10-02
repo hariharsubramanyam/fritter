@@ -1,3 +1,5 @@
+// This file defines a route whiich returns all the tweets that have been made.
+
 var express = require("express");
 var async = require("async");
 var UserAuth = require("../models/user_auth").UserAuth;
