@@ -69,7 +69,7 @@ The `username` is unique, because there can only be one user with a given `usern
 
 However, I expect that these models will be extended for part 2 of the project.
 
-## No Server Side View Rendering
+## Server is a REST API which returns JSON
 
 I made a decision to **NOT render any HTML on the server side**. The server serves only as a REST API and simply returns JSON, no HTML. The decision to not do server side rendering and to make it a simple JSON REST API offers **MANY** benefits, some of which are:
 
