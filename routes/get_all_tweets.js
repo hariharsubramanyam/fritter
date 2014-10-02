@@ -24,7 +24,7 @@ router.get("/all", function(req, res) {
   async.waterfall([
     // Step 1: Return all the tweets.
     function(callback) {
-      Tweet.find({}).sort("-created").exec(function(err, results) {
+      Tweet.find({}).sort("created").exec(function(err, results) {
         if (err) send_error(res, err);
         send_response(res, results);
       });

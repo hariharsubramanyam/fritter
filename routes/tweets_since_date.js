@@ -36,7 +36,7 @@ router.get("/since/:date", function(req, res) {
     // Step 2: Return all tweets since the timestamp.
     function(date, callback) {
       try {
-        Tweet.find({"created": {"$gte": date}}).sort("-created").exec(function (err, results) {
+        Tweet.find({"created": {"$gte": date}}).sort("created").exec(function (err, results) {
           if (err) send_error(res, "Could not find tweets");
           send_response(res, results);
         });

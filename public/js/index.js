@@ -19,20 +19,14 @@
     var tweet_id_under_edit;
     var authenticator = new Fritter.Authenticator();
     var tweeter = new Fritter.Tweeter(authenticator);
+    var tweet_list;
 
   $(document).ready(function() {
     async.series([
       setup_variables,
       display_modal_if_needed,
       setup_handlers,
-      update_tweets,
       set_username,
-      function(callback) {
-        update_interval = setInterval(function() {
-          update_tweets(function(){});
-        }, 1000);
-        callback(null);
-      },
     ]); // End async series.
   }); // End document ready.
 
@@ -58,6 +52,7 @@
     btn_make_tweet = $("#btn_make_tweet");
     lst_tweets = $("#tweet_list");
     h_username = $("#h_username");
+    tweet_list = new Fritter.TweetList(tweeter, lst_tweets);
     callback(null);
   }; 
 
@@ -79,50 +74,6 @@
     input.attr("readonly");
   };
 
-  var update_tweets = function(callback) {
-    tweeter.get_all_tweets(function(err, results) {
-      if (err) {
-        console.log(err);
-      } else {
-        lst_tweets.html("");
-        for (var i = 0; i < results.length; i++) {
-          var list_elem = $("<li></li>");
-          list_elem.attr("id", results[i]._id.toString());
-          var tweet_content = $("<input class='non-editable' type='text' value='" + results[i].content + "'readonly>");
-          var user_name = $("<span><strong>"+results[i].username+"</strong> </span>");
-          if (tweeter.is_my_tweet(results[i]._id.toString())) {
-            (function(tweet_id, list_item){
-              var edit_button = $("<button class='btn btn-warning edit_tweet_button'>Edit</button>");
-              if (tweet_id_under_edit === tweet_id) {
-                editable_tweet(edit_button, tweet_content);
-              }
-              var delete_button = $("<button class='btn btn-danger delete_tweet_button'>Delete</button>");
-              delete_button.click(function() {
-                tweeter.delete_tweet(tweet_id);
-              });
-              edit_button.click(function() {
-                if (tweet_id_under_edit === tweet_id) {
-                  noneditable_tweet(edit_button, tweet_content);
-                  tweet_id_under_edit = null;
-                } else {
-                  editable_tweet(edit_button, tweet_content);
-                  tweet_id_under_edit = tweet_id;
-                }
-              });
-              list_item.append(edit_button);
-              list_elem.append(delete_button);
-            })(results[i]._id.toString(), list_elem);
-          }
-
-          user_name.append(tweet_content);
-          list_elem.append(user_name);
-          lst_tweets.append(list_elem);
-        }
-        callback(null);
-      }
-    });
-  };
-
   var setup_handlers = function(callback) {
     btn_logout.click(function(e) {
       authenticator.logout(function(err) {
@@ -135,10 +86,8 @@
     });
 
     btn_make_tweet.click(function(e) {
-      tweeter.make_tweet(txt_tweet.val(), function(err, tweet) {
-        if (err) console.log(err);
-        txt_tweet.val("");
-      });
+      tweet_list.make_tweet(txt_tweet.val());
+      txt_tweet.val("");
     });
     callback(null);
   };
