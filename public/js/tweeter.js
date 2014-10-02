@@ -6,6 +6,7 @@
     // This should be an Authenticator object.
     var _authenticator = authenticator;
     
+    // A javascript object where the key is the tweet id and the object is the tweet. 
     var tweet_for_id = {};
 
     /**
@@ -69,6 +70,11 @@
       });
     };
 
+    /**
+     * Deletes the tweet with the given id.
+     *
+     * @param tweet_id
+     */
     var delete_tweet = function(tweet_id) {
       $.post("/tweets/delete", {
         "session_id": $.cookie("session_id"),
@@ -80,6 +86,12 @@
       });
     };
 
+    /**
+     * Edits a tweet.
+     *
+     * @param tweet_id - the id of the tweet to edit.
+     * @param content - the new content of the tweet.
+     */
     var edit_tweet = function(tweet_id, content) {
       $.post("/tweets/edit", {
         "session_id": $.cookie("session_id"),
