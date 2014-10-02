@@ -14,6 +14,7 @@
         "session_id": $.cookie("session_id"),
         "tweet": content
       }, function(data) {
+        data = JSON.parse(data);
         if (data.error) {
           callback(error);
         } else {
