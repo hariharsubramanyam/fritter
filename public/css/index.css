@@ -24,3 +24,14 @@
 .edit_tweet_button, .delete_tweet_button{
   margin-right: 5px;
 }
+
+.non-editable {
+  background-color: none;
+  border: none;
+}
+
+.editable {
+  background-color: none;
+  border: 1px dotted black;
+  border-radius: 5px;
+}

@@ -16,6 +16,7 @@
     var lst_tweets;
     var h_username;
     var update_interval;
+    var tweet_id_under_edit;
     var authenticator = new Fritter.Authenticator();
     var tweeter = new Fritter.Tweeter(authenticator);
 
@@ -37,6 +38,7 @@
 
   var set_username = function(callback) {
     h_username.text(authenticator.get_username());
+    callback(null);
   };
 
 
@@ -59,6 +61,24 @@
     callback(null);
   }; 
 
+  var editable_tweet = function(button, input) {
+    button.text("Done");
+    input.removeClass("non-editable");
+    button.removeClass("btn-warning");
+    input.addClass("editable");
+    button.addClass("btn-success");
+    input.removeAttr("readonly");
+  };
+
+  var noneditable_tweet = function(button, input) {
+    button.text("Edit");
+    input.addClass("non-editable");
+    button.addClass("btn-warning");
+    input.removeClass("editable");
+    button.removeClass("btn-success");
+    input.attr("readonly");
+  };
+
   var update_tweets = function(callback) {
     tweeter.get_all_tweets(function(err, results) {
       if (err) {
@@ -68,18 +88,34 @@
         for (var i = 0; i < results.length; i++) {
           var list_elem = $("<li></li>");
           list_elem.attr("id", results[i]._id.toString());
+          var tweet_content = $("<input class='non-editable' type='text' value='" + results[i].content + "'readonly>");
+          var user_name = $("<span><strong>"+results[i].username+"</strong> </span>");
           if (tweeter.is_my_tweet(results[i]._id.toString())) {
             (function(tweet_id, list_item){
               var edit_button = $("<button class='btn btn-warning edit_tweet_button'>Edit</button>");
+              if (tweet_id_under_edit === tweet_id) {
+                editable_tweet(edit_button, tweet_content);
+              }
               var delete_button = $("<button class='btn btn-danger delete_tweet_button'>Delete</button>");
               delete_button.click(function() {
                 tweeter.delete_tweet(tweet_id);
+              });
+              edit_button.click(function() {
+                if (tweet_id_under_edit === tweet_id) {
+                  noneditable_tweet(edit_button, tweet_content);
+                  tweet_id_under_edit = null;
+                } else {
+                  editable_tweet(edit_button, tweet_content);
+                  tweet_id_under_edit = tweet_id;
+                }
               });
               list_item.append(edit_button);
               list_elem.append(delete_button);
             })(results[i]._id.toString(), list_elem);
           }
-          list_elem.append($("<span><strong>"+results[i].username+"</strong> "+results[i].content + "</span>"));
+
+          user_name.append(tweet_content);
+          list_elem.append(user_name);
           lst_tweets.append(list_elem);
         }
         callback(null);
