@@ -1,5 +1,6 @@
 (function() {
-  var Tweeter = function() {
+  var Tweeter = function(_authenticator) {
+    var authenticator = _authenticator;
     var last_update_time = null;
     var tweet_for_id = {};
 
@@ -68,13 +69,24 @@
       return tweet_for_id[id];
     };
 
+    /**
+     * Given a tweet id, returns whether the tweet belongs to the current user.
+     */
     var is_my_tweet = function(id) {
+      if (tweet_for_id[id] === undefined) {
+        return false;
+      };
+      if (authenticator.get_username() === undefined) {
+        return false;
+      };
+      return tweet_for_id[id].username === authenticator.get_username();
     };
 
     var that = {};
     that.make_tweet = make_tweet;
     that.get_latest_tweets = get_latest_tweets;
     that.get_tweet_for_id = get_tweet_for_id;
+    that.is_my_tweet = is_my_tweet;
     return that;
   };
 

@@ -13,21 +13,16 @@
     var modal_alert_timeout;
     var txt_tweet;
     var btn_make_tweet;
+    var lst_tweets;
     var authenticator = new Fritter.Authenticator();
-    var tweeter = new Fritter.Tweeter();
+    var tweeter = new Fritter.Tweeter(authenticator);
 
   $(document).ready(function() {
-    tweeter.get_latest_tweets(function(err, results) {
-      if (err) {
-        console.log(err);
-      } else {
-        console.log(results);
-      }
-    });
     async.series([
       setup_variables,
       display_modal_if_needed,
       setup_handlers,
+      load_tweets,
       function(callback) {
         console.log("done!")
       } // 
@@ -49,13 +44,28 @@
     txt_tweet = $("#txt_tweet");
     txt_tweet.val("");
     btn_make_tweet = $("#btn_make_tweet");
+    lst_tweets = $("#tweet_list");
     callback(null);
   }; 
 
   var load_tweets = function(callback) {
     tweeter.get_latest_tweets(function(err, results) {
-      console.log(results);
-      callback(null);
+      if (err) {
+        console.log(err);
+      } else {
+        for (var i = 0; i < results.length; i++) {
+          var list_elem = "<li>";
+          if (tweeter.is_my_tweet(results[i]._id.toString())) {
+            list_elem += "<button class='btn btn-warning edit_tweet_button'>Edit</button>";
+            list_elem += "<button class='btn btn-danger delete_tweet_button'>Delete</button>";
+          }
+          list_elem += "<strong>"+results[i].username+"</strong> "+results[i].content + " ";
+          list_elem += "</li>";
+          console.log(list_elem);
+          lst_tweets.append(list_elem);
+        }
+        callback(null);
+      }
     });
   };
 
@@ -73,7 +83,6 @@
     btn_make_tweet.click(function(e) {
       tweeter.make_tweet(txt_tweet.val(), function(err, tweet) {
         if (err) console.log(err);
-        console.log(tweet);
       });
     });
     callback(null);
