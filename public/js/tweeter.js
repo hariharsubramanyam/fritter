@@ -18,7 +18,7 @@
       }, function(data) {
         data = JSON.parse(data);
         if (data.error) {
-          callback(error);
+          callback(data.error);
         } else {
           callback(null, data.result);
         }

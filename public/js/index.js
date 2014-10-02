@@ -9,8 +9,11 @@
     var btn_logout;
     var p_alert;
     var div_alert; 
+    var p_tweet_alert;
+    var div_tweet_alert; 
     var login_modal;
     var modal_alert_timeout;
+    var tweet_alert_timeout;
     var txt_tweet;
     var btn_make_tweet;
     var lst_tweets;
@@ -47,11 +50,14 @@
     btn_logout = $("#btn_logout");
     p_alert = $("#p_alert");
     div_alert = $("#div_alert");
+    p_tweet_alert= $("#p_tweet_alert");
+    div_tweet_alert = $("#div_tweet_alert");
     txt_tweet = $("#txt_tweet");
     txt_tweet.val("");
     btn_make_tweet = $("#btn_make_tweet");
     lst_tweets = $("#tweet_list");
     h_username = $("#h_username");
+    div_tweet_alert.css("visibility", "hidden");
     callback(null);
   }; 
 
@@ -86,10 +92,24 @@
     });
 
     btn_make_tweet.click(function(e) {
-      tweet_list.make_tweet(txt_tweet.val());
-      txt_tweet.val("");
+      var tweet = txt_tweet.val();
+      if (tweet.length > 140) {
+        display_tweet_alert("You need to remove " + (tweet.length - 140) + " characters before you can tweet this!");
+      } else {
+        tweet_list.make_tweet(txt_tweet.val());
+        txt_tweet.val("");
+      }
     });
     callback(null);
+  };
+
+  var display_tweet_alert = function(message) {
+    p_tweet_alert.text(message);
+    clearTimeout(tweet_alert_timeout);
+    div_tweet_alert.css("visibility", "visible");
+    tweet_alert_timeout = setTimeout(function() {
+      div_tweet_alert.css("visibility", "hidden");
+    }, 5000);
   };
 
   var display_modal_alert = function(message) {
