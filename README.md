@@ -29,7 +29,22 @@ If you logout, then when you start the page again, the login/register modal will
 
 ## Highlights
 
+The most important highlight is that the server is simply a REST API (see the [design challenges](https://github.com/6170-fa14/hsubrama_proj2/blob/master/README.md#server-is-a-rest-api-which-returns-json)).
 
+Look at any of the routes in the `routes/` directory, such as [`routes/make_tweets.js`](https://github.com/6170-fa14/hsubrama_proj2/blob/master/routes/make_tweet.js). Each of the routes is simple and solves one specific problem. Furthermore, by using the `async` library, they avoid callback hell.
+
+Another nice point is that the API endpoints are very simple:
+
+1. `/tweets/all`
+2. `/tweets/since`
+3. `/tweets/make`
+4. `/tweets/edit`
+3. `/auth/login`
+4. `/auth/logout`
+5. `/auth/register`
+6. `/auth/validate_session`
+
+On the client side, look at the [`public/js/tweeter.js`](https://github.com/6170-fa14/hsubrama_proj2/blob/master/public/js/tweeter.js) and [`public/js/auth.js`](https://github.com/6170-fa14/hsubrama_proj2/blob/master/public/js/auth.js) classes which avoid page refreshes by using AJAX to interact with the server.
 
 ## Help Wanted
 
@@ -82,6 +97,17 @@ I made a decision to **NOT render any HTML on the server side**. The server serv
 
 # Architecture
 
+`server.js` - the server
+
+`models/` - contains the data models.
+
+`routes/` - contains the API logic
+
+`public/index.html` - the client (it is a single page application)
+
+`public/js` - contains the client side code.
+
+`public/css` - styles
 
 # Author
 Harihar Subramanyam (hsubrama@mit.edu)
