@@ -25,6 +25,7 @@
             tweet_content.addClass("editable");
             tweet_content.removeAttr("readonly");
           } else {
+            tweeter.edit_tweet(result._id.toString(), tweet_content.val());
             edit_button.text("Edit");
             edit_button.addClass("btn-warning");
             edit_button.removeClass("btn-success");
@@ -50,7 +51,14 @@
           for (var i = 0; i < results.length; i++) {
             if (tweet_for_id[results[i]._id.toString()] === undefined) {
               add_to_list(results[i]);
-            } // End result not in list.
+            } else {
+              var tweet_list_item = $("#tweet"+results[i]._id.toString());
+              var textarea = tweet_list_item.find("textarea");
+              var edit_button = tweet_list_item.find(".edit_tweet_button");
+              if (textarea.text() !== results[i].content && edit_button.text() !== "Done") {
+                textarea.text(results[i].content);
+              }
+            }
             new_tweet_for_id[results[i]._id.toString()] = true;
           } // End iterate through results.
 

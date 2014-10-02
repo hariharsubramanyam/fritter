@@ -101,6 +101,18 @@
       });
     };
 
+    var edit_tweet = function(tweet_id, content) {
+      $.post("/tweets/edit", {
+        "session_id": $.cookie("session_id"),
+        "tweet_id": tweet_id,
+        "content": content
+      }, function(data) {
+        if (data.error) {
+          console.log(data.error);
+        }
+      });
+    };
+
     var that = {};
     that.make_tweet = make_tweet;
     that.get_latest_tweets = get_latest_tweets;
@@ -108,6 +120,7 @@
     that.get_all_tweets = get_all_tweets;
     that.is_my_tweet = is_my_tweet;
     that.delete_tweet = delete_tweet;
+    that.edit_tweet = edit_tweet;
     return that;
   };
 
