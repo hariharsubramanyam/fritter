@@ -76,14 +76,6 @@ The code is inside the `js` directory.
 
 `js/sample_initial_states.js` - Defines some sample initial board configurations.
 
-# Testing
-
-Testing is done with [QUnit](http://qunitjs.com/). See `js/qunit.js` and `css/qunit.css`. The following files are also used:
-
-`js/test.js` - Contains a boolean flag to toggle test running. If true, all tests will be run.
-
-`js/tests/` - Unit tests are inside this directory.
-
 # Author
 Harihar Subramanyam (hsubrama@mit.edu)
 
