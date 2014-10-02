@@ -52,7 +52,6 @@
     btn_make_tweet = $("#btn_make_tweet");
     lst_tweets = $("#tweet_list");
     h_username = $("#h_username");
-    tweet_list = new Fritter.TweetList(tweeter, lst_tweets);
     callback(null);
   }; 
 
@@ -75,6 +74,7 @@
   };
 
   var setup_handlers = function(callback) {
+    tweet_list = new Fritter.TweetList(tweeter, lst_tweets);
     btn_logout.click(function(e) {
       authenticator.logout(function(err) {
         if (err) {

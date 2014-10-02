@@ -16,6 +16,23 @@
           $("#tweet"+result._id.toString()).remove();
           tweeter.delete_tweet(result._id.toString());
         });
+        edit_button.click(function() {
+          if (edit_button.text() === "Edit") {
+            edit_button.text("Done");
+            edit_button.removeClass("btn-warning");
+            edit_button.addClass("btn-success");
+            tweet_content.removeClass("non-editable");
+            tweet_content.addClass("editable");
+            tweet_content.removeAttr("readonly");
+          } else {
+            edit_button.text("Edit");
+            edit_button.addClass("btn-warning");
+            edit_button.removeClass("btn-success");
+            tweet_content.addClass("non-editable");
+            tweet_content.removeClass("editable");
+            tweet_content.attr("readonly", "true");
+          }
+        });
         list_item.append(edit_button);
         list_item.append(delete_button);
       }
@@ -56,6 +73,7 @@
       });
     };
 
+    update_tweets();
     var interval = setInterval(update_tweets, 1000);
     var that = {};
     that.make_tweet = make_tweet;
