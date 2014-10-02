@@ -1,6 +1,6 @@
 (function() {
   var Authenticator = function() {
-    var username;
+    var _username;
     /**
      * Determines if we have a valid session id.
      *
@@ -18,7 +18,7 @@
           if (data.error) {
             callback(false);
           } else {
-            username = data.result;
+            _username = data.result;
             callback(true);
           } // End else (i.e. no error)
         }); // End async call.
@@ -39,6 +39,7 @@
         "password": password
       }, function(data) {
         data = JSON.parse(data);
+        _username = username;
         if (data.error) {
           console.log("Here I am");
           callback(data.error);
@@ -63,6 +64,7 @@
         "password": password
       }, function(data) {
         data = JSON.parse(data);
+        _username = username;
         if (data.error) {
           callback(data.error);
         } else {
@@ -92,7 +94,7 @@
     }; // End logout.
 
     var get_username = function() {
-      return username;
+      return _username;
     };
 
     var that = {};

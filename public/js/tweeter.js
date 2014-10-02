@@ -1,6 +1,6 @@
 (function() {
-  var Tweeter = function(_authenticator) {
-    var authenticator = _authenticator;
+  var Tweeter = function(authenticator) {
+    var _authenticator = authenticator;
     var last_update_time = null;
     var tweet_for_id = {};
 
@@ -34,18 +34,6 @@
      */
     var get_latest_tweets = function(callback) {
       if (last_update_time === null) {
-        $.get("/tweets/all", function(data) {
-          data = JSON.parse(data);
-          if (data.error) {
-            callback(data.error)
-          } else {
-            last_update_time = new Date(); 
-            for (var i = 0; i < data.result.length; i++) {
-              tweet_for_id[data.result[i]._id.toString()] = data.result[i];
-            }
-            callback(null, data.result);
-          }
-        });
       } else {
         $.get("/tweets/since/" + last_update_time.toString(), function(data) {
           data = JSON.parse(data);
@@ -76,17 +64,50 @@
       if (tweet_for_id[id] === undefined) {
         return false;
       };
-      if (authenticator.get_username() === undefined) {
+      if (_authenticator.get_username() === undefined) {
         return false;
       };
-      return tweet_for_id[id].username === authenticator.get_username();
+      return tweet_for_id[id].username === _authenticator.get_username();
+    };
+
+    /**
+     * Gets all the tweets.
+     * @param callback - Called as callback(err, results) where err is an error, or null, and 
+     *                   results is an array of tweet objects.
+     */
+    var get_all_tweets = function(callback) {
+      $.get("/tweets/all", function(data) {
+        data = JSON.parse(data);
+        if (data.error) {
+          callback(data.error)
+        } else {
+          last_update_time = new Date(); 
+          for (var i = 0; i < data.result.length; i++) {
+            tweet_for_id[data.result[i]._id.toString()] = data.result[i];
+          }
+          callback(null, data.result);
+        }
+      });
+    };
+
+    var delete_tweet = function(tweet_id) {
+      $.post("/tweets/delete", {
+        "session_id": $.cookie("session_id"),
+        "tweet_id": tweet_id
+      }, function(data) {
+        if (data.error) {
+          console.log(data.error);
+        }
+      });
     };
 
     var that = {};
     that.make_tweet = make_tweet;
     that.get_latest_tweets = get_latest_tweets;
     that.get_tweet_for_id = get_tweet_for_id;
+    that.get_all_tweets = get_all_tweets;
     that.is_my_tweet = is_my_tweet;
+    that.delete_tweet = delete_tweet;
     return that;
   };
 

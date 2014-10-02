@@ -22,11 +22,11 @@
       setup_variables,
       display_modal_if_needed,
       setup_handlers,
-      load_tweets,
-      function(callback) {
-        console.log("done!")
-      } // 
+      update_tweets,
     ]); // End async series.
+    setInterval(function() {
+      update_tweets(function(){});
+    }, 1000);
   }); // End document ready.
 
 
@@ -48,20 +48,27 @@
     callback(null);
   }; 
 
-  var load_tweets = function(callback) {
-    tweeter.get_latest_tweets(function(err, results) {
+  var update_tweets = function(callback) {
+    tweeter.get_all_tweets(function(err, results) {
       if (err) {
         console.log(err);
       } else {
+        lst_tweets.html("");
         for (var i = 0; i < results.length; i++) {
-          var list_elem = "<li>";
+          var list_elem = $("<li></li>");
+          list_elem.attr("id", results[i]._id.toString());
           if (tweeter.is_my_tweet(results[i]._id.toString())) {
-            list_elem += "<button class='btn btn-warning edit_tweet_button'>Edit</button>";
-            list_elem += "<button class='btn btn-danger delete_tweet_button'>Delete</button>";
+            (function(tweet_id, list_item){
+              var edit_button = $("<button class='btn btn-warning edit_tweet_button'>Edit</button>");
+              var delete_button = $("<button class='btn btn-danger delete_tweet_button'>Delete</button>");
+              delete_button.click(function() {
+                tweeter.delete_tweet(tweet_id);
+              });
+              list_item.append(edit_button);
+              list_elem.append(delete_button);
+            })(results[i]._id.toString(), list_elem);
           }
-          list_elem += "<strong>"+results[i].username+"</strong> "+results[i].content + " ";
-          list_elem += "</li>";
-          console.log(list_elem);
+          list_elem.append($("<span><strong>"+results[i].username+"</strong> "+results[i].content + "</span>"));
           lst_tweets.append(list_elem);
         }
         callback(null);
@@ -104,6 +111,7 @@
       } else {
         $("#loginModal").modal({keyboard: false, backdrop: 'static'});
         div_alert.css("visibility", "hidden");
+
         btn_register.click(function() { 
           var username = reg_username.val();
           var password = reg_password.val();
