@@ -33,48 +33,55 @@ If you logout, then when you start the page again, the login/register modal will
 
 ## Help Wanted
 
-My testing code is in `js/tests` and in `js/test.js`, I create a boolean flag which determines whether tests are run.
-
-I would prefer to be able to run tests from the command line instead of having to toggle a flag and run them in the browser. Are there any JavaScript test frameworks which could help me do this?
+Currently, the client gets the latest tweets by [polling the server every second](https://github.com/6170-fa14/hsubrama_proj2/blob/master/public/js/tweet_list.js#L147). Ideally, I'd like to replace this **pull** system with a **push** systems. I'm thinking of using WebSockets, but is there a better way?
 
 # Design Challenges
 
-**Problem**: The Game of Life is supposed to be played on an **infinite grid**.
+## Data Models
 
-The naive way to store the game state is as a 2D array (i.e. array of arrays). This is bad because it's possible that the next step of the Game of Life produces a cell out of the array bounds. If this is the case, we will have to ignore that cell. By ignoring it, that cell can no longer affect other cells, so our simulation is not a **true** Game of Life.
-
-Another approach is to make a 2D array which is significantly larger than the grid displayed to the user. While this isn't perfect, it is a "better approximation" to an infinite grid. However, many cells of this array may not be used in the simulation, so storage space is wasted.
-
-The solution used in this program is to **store only the coordinates of the live cells**. We store them in a JavaScript object called `live_cells` in `js/life.js`. The keys of the objects are coordinates (represented as two-element arrays converted to strings `[x, y]`) and the values of the object are simply `True`. For instance:
+Currently, my data models are:
 
 ```
-{
-  "[1, 2]": True,
-  "[3, 5]": True
+UserAuth: {
+  _id: ObjectId,
+  username: String,
+  hash_password: String
 }
-
 ```
 
-The above represents a game state with two live cells, at (1, 2) and (3, 5). By storing them as the keys of an object, we can insert, delete, and lookup in constant time.
 
-Since we only store the live cells instead of a 2D array of all cells, we are more efficient with storage space and can scale to support even a very large Game of Life.
+```
+Tweet: {
+  _id: ObjectId,
+  username: String
+  content: String
+  created: Date
+}
+```
+
+```
+Session: {
+  _id: ObjectId,
+  username: String
+}
+```
+The `username` is unique, because there can only be one user with a given `username`. I was worried that these models were too simple, but they worked very well for the first project - resulting in clean code and very few database calls for each operation (ex. there was never a need to make database accesses for each element in an array).
+
+However, I expect that these models will be extended for part 2 of the project.
+
+## No Server Side View Rendering
+
+I made a decision to **NOT render any HTML on the server side**. The server serves only as a REST API and simply returns JSON, no HTML. The decision to not do server side rendering and to make it a simple JSON REST API offers **MANY** benefits, some of which are:
+
+1. There is no UI code on the server, so the frontend and backend are decoupled, which makes it easier to work on them separately.
+2. The REST API can be used by many different programs - Apps, Web clients, Scripts, Desktop applications, Embedded systems connected to the internet, and more.
+3. Testing the server is much easier, we only need to see if the JSON responses are correct, we don't need to parse HTML looking for specific data.
+4. The web client gets all its data through AJAX calls so there is **no need for refreshing the page**.
+5. The client **only needs to download the HTML/CSS/JavaScript ONCE**. After that, the only thing passing back and forth is JSON. This means that the amount of data going from client to server (and vice versa) is much less.
 
 
 # Architecture
 
-`index.html` loads the stylesheets and javascripts. It displays the `canvas` on which the Game of Life will be drawn.
-
-The code is inside the `js` directory.
-
-`js/main.js` - Creates a global object called `LIFE`. All other classes are fields of this object (to avoid polluting global scope).
-
-`js/life.js` - The game logic. It creates the `Life` class which tracks live cells and takes a step in the Game of Life each time the `step()` method is called.
-
-`js/canvas_grid.js` - The canvas grid system. It creates a class which draws a grid on top of an HTML `canvas` and fills/clears grids squares. NOTE: I created this class before the 6.170 staff provided their own drawing code, that is why I'm not using the 6.170 drawing code.
-
-`js/game_ui.js` - Interaction between models and user interface. It sets up handlers for the buttons and sets up the logic to draw the game state (from `js/life.js`) onto the `canvas` grid (from `js/canvas_grid.js`).
-
-`js/sample_initial_states.js` - Defines some sample initial board configurations.
 
 # Author
 Harihar Subramanyam (hsubrama@mit.edu)
