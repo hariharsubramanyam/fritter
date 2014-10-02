@@ -1,8 +1,18 @@
+// This file creates the Authenticator class, which communicates with the backend API to do
+// authentication.
+
 (function() {
   var Authenticator = function() {
-    var _username;
     /**
-     * Determines if we have a valid session id.
+     * The username of the current user. This can be determined in one of three methods:
+     * 1) A successful login.
+     * 2) A successful registration.
+     * 3) A successful lookup of a session_id.
+     */
+    var _username;
+
+    /**
+     * Determines if the session_id (stored as a cookie) is valid.
      *
      * @param callback - Executed as callback(has_session_id).
      */
@@ -41,7 +51,6 @@
         data = JSON.parse(data);
         _username = username;
         if (data.error) {
-          console.log("Here I am");
           callback(data.error);
         } else {
           $.cookie("session_id", data.result);
@@ -93,6 +102,14 @@
       }); // End post call.
     }; // End logout.
 
+    /**
+     * Return the username of the user. If the user has not done any of the following...
+     * 1) Logged in.
+     * 2) Registered.
+     * 3) Validated their session_id.
+     *
+     * ...then the method will return undefined.
+     */
     var get_username = function() {
       return _username;
     };

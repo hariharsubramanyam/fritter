@@ -1,3 +1,5 @@
+// This class creates the UserAuth model, which associates a username with a hashed password.
+
 var mongoose = require("mongoose");
 
 var UserAuthSchema = mongoose.Schema({
