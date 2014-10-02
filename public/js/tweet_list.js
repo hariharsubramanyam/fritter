@@ -8,7 +8,7 @@
       list_item.attr("id", "tweet"+result._id.toString());
       result.content = result.content.replace(/'/g, '&#39');
       var user_name = $("<span><strong>"+result.username+"</strong> </span>");
-      var tweet_content = $("<input class='non-editable' type='text' value='" + result.content + "'readonly>");
+      var tweet_content = $("<textarea class='non-editable tweet-content' rows='1' cols='140'  type='text' readonly>" + result.content + "</textarea>");
       if (is_mine || tweeter.is_my_tweet(result._id.toString())) {
         var edit_button = $("<button class='btn btn-warning edit_tweet_button'>Edit</button>");
         var delete_button = $("<button class='btn btn-danger delete_tweet_button'>Delete</button>");

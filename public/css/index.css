@@ -40,3 +40,9 @@
   margin-top: 10px;
   float: right;
 }
+
+.tweet-content {
+  display: inline;
+  font-size: 15px;
+  resize: none;
+}
