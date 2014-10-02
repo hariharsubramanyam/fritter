@@ -14,6 +14,8 @@
     var txt_tweet;
     var btn_make_tweet;
     var lst_tweets;
+    var h_username;
+    var update_interval;
     var authenticator = new Fritter.Authenticator();
     var tweeter = new Fritter.Tweeter(authenticator);
 
@@ -23,11 +25,19 @@
       display_modal_if_needed,
       setup_handlers,
       update_tweets,
+      set_username,
+      function(callback) {
+        update_interval = setInterval(function() {
+          update_tweets(function(){});
+        }, 1000);
+        callback(null);
+      },
     ]); // End async series.
-    setInterval(function() {
-      update_tweets(function(){});
-    }, 1000);
   }); // End document ready.
+
+  var set_username = function(callback) {
+    h_username.text(authenticator.get_username());
+  };
 
 
   var setup_variables = function(callback) {
@@ -45,6 +55,7 @@
     txt_tweet.val("");
     btn_make_tweet = $("#btn_make_tweet");
     lst_tweets = $("#tweet_list");
+    h_username = $("#h_username");
     callback(null);
   }; 
 
@@ -90,6 +101,7 @@
     btn_make_tweet.click(function(e) {
       tweeter.make_tweet(txt_tweet.val(), function(err, tweet) {
         if (err) console.log(err);
+        txt_tweet.val("");
       });
     });
     callback(null);
