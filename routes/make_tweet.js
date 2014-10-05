@@ -21,7 +21,7 @@ var TWEET_LENGTH = 140;
  * @param req - POST body needs session_id and tweet.
  * @param res - The response will be:
  * {
- *  error: whether an error occured,
+ *  error: The error, or null if there is no error.
  *  result: {
  *    _id: An ObjectId indicating the ID (you need to use toString() on this)
  *    username: The user who created the tweet.

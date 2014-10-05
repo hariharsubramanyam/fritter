@@ -22,6 +22,7 @@ var get_all_tweets_route = require('./routes/get_all_tweets').initialize(mongoos
 var tweets_since_date_route = require('./routes/tweets_since_date').initialize(mongoose);
 var edit_tweet_route = require('./routes/edit_tweet').initialize(mongoose);
 var delete_tweet_route = require('./routes/delete_tweet').initialize(mongoose);
+var make_follow_route = require('./routes/make_follow').initialize(mongoose);
 
 var app = express();
 
@@ -46,6 +47,7 @@ app.use('/tweets', get_all_tweets_route);
 app.use('/tweets', tweets_since_date_route);
 app.use('/tweets', edit_tweet_route);
 app.use('/tweets', delete_tweet_route);
+app.use('/follow', make_follow_route);
 
 /// catch 404 and forward to error handler
 app.use(function(req, res, next) {
