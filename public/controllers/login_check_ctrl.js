@@ -6,7 +6,7 @@
         $("body").css("visibility", "visible");
         callback(null);
       } else {
-        window.location.href = "/views/login.html";
+        window.location.href = "/views/login_page.html";
       };
     });
     var that = {};
