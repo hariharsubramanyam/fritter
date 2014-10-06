@@ -53,7 +53,7 @@
         if (data.error) {
           callback(data.error);
         } else {
-          $.cookie("session_id", data.result);
+          $.cookie("session_id", data.result, {"expires": 7, "path": "/"});
           callback(null, data.result);
         } // End else (i.e. the user was created with a session id)
       }); // End post call.
@@ -77,7 +77,7 @@
         if (data.error) {
           callback(data.error);
         } else {
-          $.cookie("session_id", data.result);
+          $.cookie("session_id", data.result, {"expires": 7, "path": "/"});
           callback(null, data.result);
         } // End else (i.e. the user was created with a session id)
       }); // End post call.
