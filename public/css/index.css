@@ -46,7 +46,6 @@ body {
 }
 
 .tweet-content {
-  display: inline;
   font-size: 15px;
   resize: none;
 }

@@ -32,7 +32,6 @@
       }
     });
 
-
     var that = {};
     return that;
   };
