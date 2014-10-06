@@ -1,5 +1,5 @@
 (function() {
-  var RouteToLogin = function(authenticator, callback) {
+  var RouteToLoginCtrl = function(authenticator, callback) {
     authenticator.has_session_id(function(has_session_id) {
       if (has_session_id) {
         // Show the body if the user hash authenticated.
@@ -9,9 +9,7 @@
         window.location.href = "/views/login_page.html";
       };
     });
-    var that = {};
-    return that;
   };
 
-  Fritter.RouteToLogin = RouteToLogin;
+  Fritter.RouteToLoginCtrl = RouteToLoginCtrl;
 })();

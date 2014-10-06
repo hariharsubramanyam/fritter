@@ -1,5 +1,5 @@
 (function() {
-  var TweetMaker = function(tweeter, div, tweet_list) {
+  var MakeTweetCtrl = function(tweeter, tweet_list, div) {
     var html = new EJS({"url": "/views/make_tweet_view.ejs"}).render({});
     div.append(html);
 
@@ -31,10 +31,7 @@
         txt_tweet.val("");
       }
     });
-
-    var that = {};
-    return that;
   };
 
-  Fritter.TweetMaker = TweetMaker;
+  Fritter.MakeTweetCtrl = MakeTweetCtrl;
 })();

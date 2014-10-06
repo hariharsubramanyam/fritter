@@ -3,7 +3,7 @@
 // making, and deleting tweets.
 //
 (function() {
-  var TweetList = function(tweeter, ul) {
+  var TweetListCtrl = function(tweeter, ul) {
     // Object where the keys are the tweet ids (the values are all true).
     // We use an object because we can lookup keys in constant time.
     var tweet_for_id = {};
@@ -110,5 +110,5 @@
     that.make_tweet = make_tweet;
     return that;
   };
-  Fritter.TweetList = TweetList;
+  Fritter.TweetListCtrl = TweetListCtrl;
 })();

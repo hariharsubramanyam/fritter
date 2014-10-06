@@ -3,23 +3,22 @@
 // and logout.
 
 (function() {
+  // The heading which displays the username.
+  var h_username;
 
-    // The heading which displays the username.
-    var h_username;
+  // The object that performs authentication.
+  var authenticator = Fritter.Authenticator();
 
-    // The object that performs authentication.
-    var authenticator = Fritter.Authenticator();
+  // The object that communicates with the API for making, editing, and deleting tweets.
+  var tweeter = Fritter.Tweeter(authenticator);
 
-    // The object that communicates with the API for making, editing, and deleting tweets.
-    var tweeter = Fritter.Tweeter(authenticator);
-
-    // The object that puts the tweets into lst_tweets (it is initialized in setup_handlers).
-    var tweet_list;
+  // Updates the list of tweets from the server.
+  var tweet_list;
 
   $(document).ready(function() {
     async.series([
       function(callback) {
-        Fritter.RouteToLogin(authenticator, callback);
+        Fritter.RouteToLoginCtrl(authenticator, callback);
       }, 
       setup_variables,
       setup_views,
@@ -51,9 +50,9 @@
    */
   var setup_views = function(callback) {
     // Create the TweetList object to handle putting tweets into the list.
-    tweet_list = new Fritter.TweetList(tweeter, $("#tweet_list"));
-    Fritter.TweetMaker(tweeter, $("#div_make_tweet"), tweet_list);
-    Fritter.LogoutButton(authenticator, $("#div_logout_button"));
+    tweet_list = Fritter.TweetListCtrl(tweeter, $("#tweet_list"));
+    Fritter.MakeTweetCtrl(tweeter, tweet_list, $("#div_make_tweet"));
+    Fritter.LogoutButtonCtrl(authenticator, $("#div_logout_button"));
     callback(null);
   };
 })(); // End closure.
