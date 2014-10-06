@@ -7,12 +7,6 @@
     // The button which should be clicked to logout.
     var btn_logout;
 
-    // The modal window for login and registering.
-    var login_modal;
-
-    // The list of the tweets.
-    var lst_tweets;
-
     // The heading which displays the username.
     var h_username;
 
@@ -27,29 +21,21 @@
 
     var tweet_maker;
 
+    var logout_button;
+
     // The object that puts the tweets into lst_tweets (it is initialized in setup_handlers).
     var tweet_list;
 
   $(document).ready(function() {
     async.series([
-      authenticate,
+      function(callback) {
+        Fritter.RouteToLogin(authenticator, callback);
+      }, 
       setup_variables,
       setup_handlers,
       set_username
     ]); // End async series.
   }); // End document ready.
-
-  var authenticate = function(callback) {
-    authenticator.has_session_id(function(has_session_id) {
-      if (has_session_id) {
-        // Show the body if the user hash authenticated.
-        $("body").css("visibility", "visible");
-        callback(null);
-      } else {
-        window.location.href = "/html/login.html";
-      };
-    });
-  };
 
   /**
    * Display the username in h_username.
@@ -67,7 +53,6 @@
     btn_logout = $("#btn_logout");
     p_alert = $("#p_alert");
     div_tweet_alert = $("#div_tweet_alert");
-    lst_tweets = $("#tweet_list");
     h_username = $("#h_username");
     div_tweet_alert.css("visibility", "hidden");
     callback(null);
@@ -78,20 +63,9 @@
    */
   var setup_handlers = function(callback) {
     // Create the TweetList object to handle putting tweets into the list.
-    tweet_list = new Fritter.TweetList(tweeter, lst_tweets);
+    tweet_list = new Fritter.TweetList(tweeter, $("#tweet_list"));
     tweet_maker = Fritter.TweetMaker(tweeter, $("#div_make_tweet"), tweet_list);
-
-    // Handle logout.
-    btn_logout.click(function(e) {
-      authenticator.logout(function(err) {
-        if (err) {
-          console.log(err);
-        } else {
-          window.location.href = "/html/login.html";
-        }
-      });
-    });
-
+    logout_button = Fritter.LogoutButton(authenticator, $("#div_logout_button"));
     callback(null);
   };
 })(); // End closure.
