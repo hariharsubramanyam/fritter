@@ -1,0 +1,21 @@
+#follower_list {
+  float: left;
+  width: 50%;
+  list-style: none;
+}
+
+#following_list {
+  float: right;
+  width: 50%;
+  list-style: none;
+}
+
+#div_follower_following {
+  margin-top: 20px;
+}
+
+#btn_home {
+  float: left;
+  margin-left: 10px;
+  margin-top: 20px;
+}

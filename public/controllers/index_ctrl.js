@@ -30,7 +30,7 @@
    * Display the username in h_username.
    */
   var set_username = function(callback) {
-    h_username.text(authenticator.get_username());
+    h_username.text("Welcome, " + authenticator.get_username());
     callback(null);
   };
 
