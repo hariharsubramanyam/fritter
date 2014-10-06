@@ -10,20 +10,10 @@
       <div id="logoutRow" class="row">
         <button id="btn_logout" class="btn btn-primary">Logout</button>
       </div>
-      <div class="row">
-        <div id="div_tweet_alert" class="alert alert-danger alert-dismissible" role="alert" >
-          <p id="p_tweet_alert"></p>
-        </div>
-      </div>
       <div id="titleRow" class="row">
         <h1 id="h_username"></h1>
       </div>
-      <div class="row">
-        <textarea id="txt_tweet" cols="140" class="form-input col-md-12"> 
-        </textarea>
-      </div>
-      <div class="row">
-        <button id="btn_make_tweet" class="btn btn-success">Make Tweet</button>
+      <div id="div_make_tweet">
       </div>
       <div class="row">
         <h2>Tweets</h2>
@@ -33,12 +23,14 @@
       </div>
     </div>
     <script src="/bower_components/async/lib/async.js"></script>
+    <script src="/js/ejs.js"></script>
     <script src="/bower_components/jquery/dist/jquery.min.js"></script>
     <script src="/bower_components/jquery-cookie/jquery.cookie.js"></script>
     <script src="/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
     <script src="/js/app.js"></script>
     <script src="/js/auth.js"></script>
     <script src="/js/tweeter.js"></script>
+    <script src="/js/tweet_maker.js"></script>
     <script src="/js/tweet_list.js"></script>
     <script src="/js/index.js"></script>
   </body>
