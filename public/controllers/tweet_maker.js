@@ -1,6 +1,6 @@
 (function() {
   var TweetMaker = function(tweeter, div, tweet_list) {
-    var html = new EJS({"url": "/html/tweet_maker.ejs"}).render({});
+    var html = new EJS({"url": "/views/tweet_maker.ejs"}).render({});
     div.append(html);
 
     var txt_tweet = div.find("#txt_tweet");

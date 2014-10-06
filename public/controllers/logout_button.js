@@ -1,6 +1,6 @@
 (function() {
   var LogoutButton = function(authenticator, div) {
-    var html = new EJS({"url": "/html/logout_button.ejs"}).render({});
+    var html = new EJS({"url": "/views/logout_button.ejs"}).render({});
     div.append(html);
     var btn_logout = div.find("#btn_logout");
     btn_logout.click(function() {
