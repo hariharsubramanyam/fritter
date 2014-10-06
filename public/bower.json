@@ -1,9 +1,0 @@
-{
-  "name": "Fritter",
-  "dependencies": {
-    "jquery": "*",
-    "bootstrap": "*",
-    "jquery-cookie": "*",
-    "async": "~0.9.0"
-  }
-}
