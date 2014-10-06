@@ -14,7 +14,9 @@
         "tweet": tweet
       });
       html = $(html);
-      var tweet_content = html.find(".tweet_content");
+      var tweet_content = html.find(".tweet-content");
+      tweet_content.val("");
+      tweet_content.val(tweet.content);
       if (just_made || tweeter.is_my_tweet(tweet._id.toString())) {
         var edit_button = html.find(".edit_tweet_button");
         var delete_button = html.find(".delete_tweet_button");
@@ -64,10 +66,10 @@
               // If the tweet is already in the list, see if it's been edited (and not currently
               // being edited). If so, then update the tweet already in the list.
               var tweet_list_item = $("#tweet"+results[i]._id.toString());
-              var textarea = tweet_list_item.find("textarea");
+              var textarea = tweet_list_item.find(".tweet-content");
               var edit_button = tweet_list_item.find(".edit_tweet_button");
-              if (textarea.text() !== results[i].content && edit_button.text() !== "Done") {
-                textarea.text(results[i].content);
+              if (textarea.val() !== results[i].content && edit_button.text() !== "Done") {
+                textarea.val(results[i].content);
               }
             }
 
