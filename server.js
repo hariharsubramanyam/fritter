@@ -13,10 +13,7 @@ var mongoose = require("mongoose");
 mongoose.connect(process.env.OPENSHIFT_MONGODB_DB_URL || constants.MONGO_URL);
 
 // These are all the routes I've defined.
-var login_route = require('./routes/login').initialize(mongoose);
-var logout_route = require('./routes/logout').initialize(mongoose);
-var register_route = require('./routes/register').initialize(mongoose);
-var validate_session_route = require('./routes/validate_session').initialize(mongoose);
+var auth_route = require('./routes/auth').initialize(mongoose);
 var make_tweet_route = require('./routes/make_tweet').initialize(mongoose);
 var get_all_tweets_route = require('./routes/get_all_tweets').initialize(mongoose);
 var tweets_since_date_route = require('./routes/tweets_since_date').initialize(mongoose);
@@ -38,10 +35,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 // This is where all the routes are set up.
-app.use('/auth', login_route);
-app.use('/auth', logout_route);
-app.use('/auth', register_route);
-app.use('/auth', validate_session_route);
+app.use('/auth', auth_route);
 app.use('/tweets', make_tweet_route);
 app.use('/tweets', get_all_tweets_route);
 app.use('/tweets', tweets_since_date_route);
