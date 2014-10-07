@@ -49,9 +49,16 @@ router.post("/mine", function(req, res) {
         }
       });
     },
-    // Step 3: Get all the messages where this user is involved.
+    // Step 3: Mark all messages where the user is the recipient as read, because they are being sent to the user.
     function(username, callback) {
-      PrivateMessage.find().or([{"sender": username}, {"recipient": username}]).exec(
+      PrivateMessage.update({"recipient": username}, {"unread": false}, {"multi": true}, function(err, result) {
+        if (err) send_error(res, err);
+        callback(null, username);
+      });
+    },
+    // Step 4: Get all the messages where this user is involved.
+    function(username, callback) {
+      PrivateMessage.find().or([{"sender": username}, {"recipient": username}]).sort({"sender": 1, "created": -1}).exec(
       function(err, results){
         if (err) send_error(res, err);
         send_response(res, results);
@@ -124,6 +131,48 @@ router.post("/send", function(req, res) {
       message.save(function(err, result) {
         if (err) send_error(res, err);
         send_response(res, result);
+      });
+    }
+  ]);
+});
+
+/**
+ * Get the number of unread messages.
+ *
+ * @param req - POST body must have a session_id
+ * @parma res - Of the form:
+ * {
+ *  error: null, unless there is an error,
+ *  result: the number of unread messages
+ * }
+ */
+router.post("/unread", function(req, res) {
+  async.waterfall([
+    // Step 1: Ensure that a session_id exists in the POST body.
+    function(callback) {
+      var session_id = req.body.session_id;
+      if (session_id === undefined) {
+        send_error(res, "There must be a session_id in the POST body");
+      } else {
+        callback(null, session_id);
+      }
+    },
+    // Step 2: Get the username for the session_id.
+    function(session_id, callback) {
+      Session.find({"_id": new mongoose.Types.ObjectId(session_id)}, function(err, results) {
+        if (err) send_error(res, err);
+        if (results.length !== 1) {
+          send_error(res, "Found zero, or more than 1 session with the given id");
+        } else {
+          callback(null, results[0].username);
+        }
+      });
+    },
+    // Step 3: Find all unread messages where the user is the recipient.
+    function(username, callback) {
+      PrivateMessage.find({"recipient": username}, function(err, results) {
+        if (err) send_error(res, err);
+        send_response(results.length);
       });
     }
   ]);

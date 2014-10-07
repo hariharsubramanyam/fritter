@@ -2,19 +2,22 @@
 <html>
   <head>
     <title>Fritter</title>
-    <link rel='stylesheet' href='/css/index.css'/>
     <link rel='stylesheet' href='/css/common.css'/>
+    <link rel='stylesheet' href='/css/messages.css'/>
   </head>
   <body>
-    <div class="container">
-      <div id="div_logout_button"></div>
-      <div id="titleRow">
-        <h1 id="h_username"></h1>
+    <div id="topbar_div">
+      <div id="other_buttons">
+        <button id="btn_home" class="pretty-button">Home</button>
+        <button id="btn_followers" class="pretty-button">Followers</button>
       </div>
-      <button id="btn_follow" class="pretty-button"></button>
-      <button id="btn_messages" class="pretty-button">0 Messages</button>
-      <div id="div_make_tweet"></div>
-      <ul id="tweet_list"></ul>
+      <div id="div_logout_button"></div>
+    </div>
+    
+    <div id="follower_div">
+    </div>
+
+    <div id="message_div">
     </div>
     <script src="/libs/async.js"></script>
     <script src="/libs/ejs.js"></script>
@@ -26,8 +29,7 @@
     <script src="/util/follow_manager.js"></script>
     <script src="/controllers/logout_button_ctrl.js"></script>
     <script src="/controllers/login_check_ctrl.js"></script>
-    <script src="/controllers/make_tweet_ctrl.js"></script>
-    <script src="/controllers/tweet_list_ctrl.js"></script>
-    <script src="/controllers/index_ctrl.js"></script>
+    <script src="/controllers/messages_page_ctrl.js"></script>
   </body>
 </html>
+

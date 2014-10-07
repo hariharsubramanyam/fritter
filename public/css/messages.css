@@ -1,0 +1,32 @@
+body {
+  visibility: visible;
+  position: absolute;
+  width: 80%;
+  left: 10%;
+  right: 10%;
+}
+
+#topbar_div {
+  min-height: 100px;
+  width: 99%;
+}
+
+#follower_div {
+  display: inline-block;
+  min-height: 400px;
+  width: 49%;
+}
+
+#message_div {
+  display: inline-block;
+  min-height:400px;
+  width: 49%;
+}
+
+#btn_logout {
+  float: right;
+}
+
+#btn_home {
+  float: left;
+}

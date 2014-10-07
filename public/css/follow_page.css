@@ -6,6 +6,10 @@
   display: inline-block;
 }
 
+#btn_home {
+  color: black;
+}
+
 #follower_list {
   text-align: center;
   width: 32%;
