@@ -12,10 +12,15 @@
   // The object that communicates with the API for making, editing, and deleting tweets.
   var tweeter = Fritter.Tweeter(authenticator);
 
+  var follow_manager = Fritter.FollowManager();
+
   // Updates the list of tweets from the server.
   var tweet_list;
 
   var btn_follow;
+
+  var num_followers;
+  var num_followed;
 
   $(document).ready(function() {
     async.series([
@@ -24,9 +29,36 @@
       }, 
       setup_variables,
       setup_views,
-      set_username
+      set_username,
+      count_followers,
+      count_followed,
+      set_follow_followed_header,
+      count_followers,
+      count_followed,
+      set_follow_followed_header
     ]); // End async series.
   }); // End document ready.
+
+  var count_followers = function(callback) {
+    follow_manager.get_followers(function(err, results) {
+      if (err) console.log(err);
+      num_followers = results.length;
+      callback(null);
+    });
+  };
+
+  var count_followed = function(callback) {
+    follow_manager.get_followed(function(err, results) {
+      if (err) console.log(err);
+      num_followed = results.length;
+      callback(null);
+    });
+  };
+
+  var set_follow_followed_header = function(callback) {
+    btn_follow.text(num_followers + " Follower(s) / " + num_followed + " Followed");
+    callback(null);
+  };
 
   /**
    * Display the username in h_username.

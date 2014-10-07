@@ -288,7 +288,6 @@ router.post("/followed", function(req, res) {
     },
     // Step 5: Return the tweets of the followed users and the user him/herself.
     function(usernames, callback) {
-      console.log(usernames);
       Tweet.find({"username": {"$in": usernames}}).sort("created").exec(function(err, results) {
         if (err) send_error(res, err);
         send_response(res, results);
