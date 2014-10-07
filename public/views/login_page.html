@@ -2,49 +2,26 @@
 <html>
   <head>
     <title>Fritter</title>
-    <link rel='stylesheet' href='/css/bootstrap.min.css'/>
     <link rel='stylesheet' href='/css/login_page.css'/>
+    <link rel='stylesheet' href='/css/common.css'/>
   </head>
   <body>
-    <div class="container">
-      <div class="well">
-        <div class="row">
-          <h1>Welcome to Fritter!</h1>
-        </div>
-        <div class="row">
-          <h2>Please login or register</h2>
-        </div>
-      </div>
-      <div class="row">
-        <h3>Register</h3>
-      </div>
-      <div class="row">
-        <input id="reg_username" type="text" placeholder="username" class="form-control col-md-2" >
-        <input id="reg_password" type="password" placeholder="password" class="form-control col-md-2">
-        <input id="reg_confirm_password"  type="password" placeholder="re-enter password" class="form-control col-md-2">
-      </div>
-      <div class="row">
-        <button id="btn_register"  class="btn btn-success col-md-1 col-md-offset-5">Register</button>
-      </div>
-      <div class="row">
-        <h3>Login</h3>
-      </div>
-      <div class="row">
-        <input id="log_username"  type="text" placeholder="username" class="col-md-2 form-control">
-        <input id="log_password" type="password" placeholder="password" class="col-md-2 form-control">
-      </div>
-      <div class="row">
-        <button id="btn_login" class="btn btn-success col-md-1 col-md-offset-3">Login</button>
-      </div>
-      <div class="row">
-        <div id="div_alert" class="alert alert-danger alert-dismissible" role="alert"> 
-          <p id="p_alert"></p>
-        </div>
+      <h1>Welcome to Fritter! Please login/register</h1>
+      <h2>Register</h2>
+      <input class="pretty-input" id="reg_username" type="text" placeholder="username" >
+      <input class="pretty-input" id="reg_password" type="password" placeholder="password">
+      <input class="pretty-input" id="reg_confirm_password"  type="password" placeholder="re-enter password">
+      <button id="btn_register"  class="pretty-button green-btn">Register</button>
+      <h2>Login</h2>
+      <input class="pretty-input" id="log_username"  type="text" placeholder="username">
+      <input class="pretty-input" id="log_password" type="password" placeholder="password">
+      <button id="btn_login" class="pretty-button green-btn">Login</button>
+      <div id="div_alert" class="alert" role="alert"> 
+        <p id="p_alert"></p>
       </div>
     <script src="/libs/async.js"></script>
     <script src="/libs/jquery.min.js"></script>
     <script src="/libs/jquery.cookie.js"></script>
-    <script src="/libs/bootstrap.min.js"></script>
     <script src="/app.js"></script>
     <script src="/util/auth.js"></script>
     <script src="/controllers/login_ctrl.js"></script>

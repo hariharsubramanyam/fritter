@@ -2,6 +2,12 @@ body {
   visibility: hidden;
 }
 
+.pretty-button {
+  background-color: none;
+  color: white;
+  border: 1px solid black;
+}
+
 #btn_logout {
   float: right; 
   margin-right: 10px; 
