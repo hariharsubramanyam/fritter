@@ -15,6 +15,8 @@
   // Updates the list of tweets from the server.
   var tweet_list;
 
+  var btn_follow;
+
   $(document).ready(function() {
     async.series([
       function(callback) {
@@ -42,6 +44,7 @@
     p_alert = $("#p_alert");
     div_tweet_alert = $("#div_tweet_alert");
     h_username = $("#h_username");
+    btn_follow = $("#btn_follow");
     callback(null);
   }; 
 
@@ -53,6 +56,9 @@
     tweet_list = Fritter.TweetListCtrl(tweeter, $("#tweet_list"));
     Fritter.MakeTweetCtrl(tweeter, tweet_list, $("#div_make_tweet"));
     Fritter.LogoutButtonCtrl(authenticator, $("#div_logout_button"));
+    btn_follow.click(function() {
+      window.location.href = "/views/follow_page.html";
+    });
     callback(null);
   };
 })(); // End closure.

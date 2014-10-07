@@ -1,14 +1,15 @@
-<li id="tweet<%= tweet._id.toString() %>">
+<li class="tweet-li" id="tweet<%= tweet._id.toString() %>">
   <span class="tweet-username">
     <strong><%= tweet.username %></strong>
   </span>
   <% if(just_made || tweeter.is_my_tweet(tweet._id.toString())) { %>
-    <button class="btn btn-warning edit_tweet_button">Edit Tweet</button> 
-    <button class="btn btn-danger delete_tweet_button">Delete Tweet</button> 
+    <button class="pretty-button yellow-btn edit_tweet_button">Edit Tweet</button> 
+    <button class="pretty-button red-btn delete_tweet_button">Delete Tweet</button> 
   <% } else { %>
     <br>
   <% } %>
-  <textarea class="non-editable tweet-content" rows="1" cols="140" type="text" readonly>
-    <%= tweet.content %>
+  <hr>
+  <textarea rows="4" class="non-editable tweet-content" type="text" readonly value="<%= tweet.content %>">
   </textarea>
+    
 </li>

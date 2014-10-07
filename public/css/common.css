@@ -32,6 +32,32 @@ body {
   background-color: #5AD427;
 }
 
+.red-btn {
+  background-color: #FF3B30;
+  color: white;
+}
+
+.red-btn:hover {
+  background-color: #FF5E3A;
+}
+
+.red-btn:active {
+  background-color: #FF885A;
+}
+
+.yellow-btn {
+  background-color: #FF9500;
+  color: white;
+}
+
+.yellow-btn:hover {
+  background-color: #FFDB4C;
+}
+
+.yellow-btn:active {
+  background-color: #FFDD4C;
+}
+
 .pretty-input {
   border-radius: 5px;
   height: 25px;

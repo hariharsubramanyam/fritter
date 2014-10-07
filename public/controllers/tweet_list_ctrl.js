@@ -28,16 +28,16 @@
         edit_button.click(function() {
           if (edit_button.text() === "Edit Tweet") {
             edit_button.text("Done");
-            edit_button.removeClass("btn-warning");
-            edit_button.addClass("btn-success");
+            edit_button.removeClass("yellow-btn");
+            edit_button.addClass("green-btn");
             tweet_content.removeClass("non-editable");
             tweet_content.addClass("editable");
             tweet_content.removeAttr("readonly");
           } else {
             tweeter.edit_tweet(tweet._id.toString(), tweet_content.val());
             edit_button.text("Edit Tweet");
-            edit_button.addClass("btn-warning");
-            edit_button.removeClass("btn-success");
+            edit_button.addClass("yellow-btn");
+            edit_button.removeClass("green-btn");
             tweet_content.addClass("non-editable");
             tweet_content.removeClass("editable");
             tweet_content.attr("readonly", "true");
