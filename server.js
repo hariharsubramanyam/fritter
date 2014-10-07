@@ -16,6 +16,7 @@ mongoose.connect(process.env.OPENSHIFT_MONGODB_DB_URL || constants.MONGO_URL);
 var auth_route = require('./routes/auth').initialize(mongoose);
 var tweet_route = require('./routes/tweet').initialize(mongoose);
 var follow_route = require('./routes/follow').initialize(mongoose);
+var search_route = require('./routes/search').initialize(mongoose);
 
 var app = express();
 
@@ -34,6 +35,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/auth', auth_route);
 app.use('/tweets', tweet_route);
 app.use('/follow', follow_route);
+app.use('/search', search_route);
 
 /// catch 404 and forward to error handler
 app.use(function(req, res, next) {

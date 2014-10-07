@@ -1,19 +1,57 @@
-#follower_list {
-  display: inline;
+#div_search {
+  height: 100%;
   float: left;
-  width: 40%;
+  margin-left: 10px;
+  width: 32%;
+  display: inline-block;
+}
+
+#follower_list {
+  text-align: center;
+  width: 32%;
+  height: 100%;
+  display: inline-block;
   list-style: none;
   margin: 0px;
   padding: 0px;
 }
 
 #followed_list {
-  display: inline;
+  text-align: right;
   float: right;
-  width: 40%;
+  width: 32%;
+  height: 100%;
+  display: inline-block;
+  list-style: none;
+  display: inline;
   list-style: none;
   margin: 0px;
   padding: 0px;
+}
+
+#followed_list li {
+  margin-right: 10px;
+}
+
+#search_list {
+  list-style: none;
+  margin: 0;
+  margin-top: 10px;
+  padding: 0;
+}
+
+#search_list li {
+  font-size: 15pt;
+}
+
+#txt_search_user {
+  font-size: 15pt;
+  width: 100%;
+}
+
+#btn_search_user {
+  margin-top: 10px;
+  width: 100%;
 }
 
 ul li p {
@@ -27,6 +65,8 @@ ul li button {
 
 #div_follower_following {
   margin-top: 20px;
+  border: 1px dotted black;
+  min-height: 500px;
 }
 
 #btn_home {
