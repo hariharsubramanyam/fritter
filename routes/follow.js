@@ -2,6 +2,7 @@
 var express = require("express");
 var async = require("async");
 var Session = require("../models/session").Session;
+var UserAuth = require("../models/user_auth").UserAuth;
 var Follow = require("../models/follow").Follow;
 var route_helper = require("./route_helper");
 var send_error = route_helper.send_error;
@@ -43,7 +44,7 @@ router.post("/followers", function(req, res) {
     },
     // Step 3: Find all the follow relationships where user is the followed. 
     function(username, callback) {
-      Follow.find({"follower": username}, function(err, results) {
+      Follow.find({"followed": username}, function(err, results) {
         if (err) send_error(res, err);
         send_response(res, results);
       });
@@ -166,6 +167,50 @@ router.post("/make", function(req, res) {
   ]);
 });
 
+/**
+ * Unfollows a user from another user.
+ *
+ * @param req - POST body needs "session_id" of the follower and the "followed" username.
+ * @param res - The response will be:
+ * {
+ *  error: The error, or null if there is no error.
+ *  result: true
+ * }
+ */
+router.post("/delete", function(req, res) {
+  async.waterfall([
+  // Step 1: Get the session_id and the followed from the POST body.
+  function(callback) {
+    var session_id = req.body.session_id;
+    var followed = req.body.followed;
+    if (session_id === undefined || followed === undefined) {
+      send_error(res, "POST body needs session_id and followed");
+    } else {
+      callback(null, session_id, followed);
+    }
+  },
+  // Step 2: Get the follower from the session_id. 
+  function(session_id, followed, callback) {
+    Session.find({"_id": new mongoose.Types.ObjectId(session_id)}, function(err, results) {
+      if (err) send_error(res, err);
+      if (results.length === 0) {
+        send_error(res, "There is no user with the given session_id");
+      } else if (results[0].username === followed) {
+        send_error(res, "You can't follow yourself");
+      } else {
+        callback(null, followed, results[0].username);
+      }
+    });
+  },
+  // Step 3: Remove all the follow relationships.
+  function(followed, follower, callback) {
+    Follow.remove({"follower": follower, "followed": followed}, function(err, results) {
+      if (err) send_error(res, err);
+      send_response(res, true);
+    });
+  }
+  ]);
+});
 module.exports.initialize = function(_mongoose) {
   mongoose = _mongoose;
   return router;

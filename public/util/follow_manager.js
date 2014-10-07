@@ -1,5 +1,5 @@
 (function() {
-  var FollowManager = function(authenticator) {
+  var FollowManager = function() {
 
     /**
      * Get the followers for the current user.
@@ -17,6 +17,7 @@
       $.post("/follow/followers", {
         "session_id": $.cookie("session_id")
       }, function(data) {
+        data = JSON.parse(data);
         if (data.error) {
           callback(data.error);
         } else {
@@ -41,6 +42,7 @@
       $.post("/follow/followed", {
         "session_id": $.cookie("session_id")
       }, function(data) {
+        data = JSON.parse(data);
         if (data.error) {
           callback(data.error);
         } else {
@@ -66,6 +68,28 @@
         "session_id": $.cookie("session_id"),
         "followed": username
       }, function(data) {
+        data = JSON.parse(data);
+        if (data.error) {
+          callback(data.error);
+        } else {
+          callback(null, data.result);
+        }
+      });
+    };
+
+    /**
+     * Unfollows the given user.
+     *
+     * @param username - The username of the user to follow.
+     * @param callback - Executed as callback(err, result). err is an error or null.
+     * result is true.
+     */
+    var unfollow = function(username, callback) {
+      $.post("/follow/delete", {
+        "session_id": $.cookie("session_id"),
+        "followed": username
+      }, function(data) {
+        data = JSON.parse(data);
         if (data.error) {
           callback(data.error);
         } else {
@@ -78,6 +102,7 @@
     that.get_followed = get_followed;
     that.get_followers = get_followers;
     that.follow = follow;
+    that.unfollow = unfollow;
     return that;
   };
 

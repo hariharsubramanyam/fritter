@@ -7,13 +7,22 @@
   padding: 0px;
 }
 
-#following_list {
+#followed_list {
   display: inline;
   float: right;
   width: 40%;
   list-style: none;
   margin: 0px;
   padding: 0px;
+}
+
+ul li p {
+  display: inline;
+  font-size: 20px;
+}
+
+ul li button {
+  margin-bottom: 10px;
 }
 
 #div_follower_following {

@@ -1,0 +1,8 @@
+<li>
+<% if(mode === "Followers") {  %>
+  <p><%= follow.follower %></p>
+<% } else { %>
+  <button class="unfollow-button pretty-button red-btn" style="display: inline">Unfollow</button>
+  <p><%= follow.followed %></p>
+<% } %>
+</li>
