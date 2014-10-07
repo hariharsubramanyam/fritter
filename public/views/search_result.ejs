@@ -1,0 +1,8 @@
+<li>
+<% if (followed_users[result.username] === undefined){  %>
+  <button class="btn_follow pretty-button green-btn">Follow</button>
+<% } else {  %>
+  <button class="btn_unfollow pretty-button red-btn">Unfollow</button>
+<% } %>
+<span><%= result.username %></span>
+</li>
