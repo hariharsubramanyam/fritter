@@ -3,7 +3,6 @@ var express = require("express");
 var async = require("async");
 var Session = require("../models/session").Session;
 var Follow = require("../models/follow").Follow;
-var constants = require("../models/constants");
 var route_helper = require("./route_helper");
 var send_error = route_helper.send_error;
 var send_response = route_helper.send_response;
