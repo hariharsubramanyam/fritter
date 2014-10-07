@@ -56,7 +56,9 @@
      *                   results is an array of tweet objects.
      */
     var get_all_tweets = function(callback) {
-      $.get("/tweets/all", function(data) {
+      $.post("/tweets/followed", {
+        "session_id": $.cookie("session_id")
+      }, function(data) {
         data = JSON.parse(data);
         if (data.error) {
           callback(data.error)
