@@ -172,7 +172,7 @@ router.post("/unread", function(req, res) {
     function(username, callback) {
       PrivateMessage.find({"recipient": username}, function(err, results) {
         if (err) send_error(res, err);
-        send_response(results.length);
+        send_response(res, results.length);
       });
     }
   ]);

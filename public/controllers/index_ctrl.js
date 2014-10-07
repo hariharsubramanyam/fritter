@@ -18,6 +18,7 @@
   var tweet_list;
 
   var btn_follow;
+  var btn_messages;
 
   var num_followers;
   var num_followed;
@@ -77,6 +78,7 @@
     div_tweet_alert = $("#div_tweet_alert");
     h_username = $("#h_username");
     btn_follow = $("#btn_follow");
+    btn_messages = $("#btn_messages");
     callback(null);
   }; 
 
@@ -88,8 +90,19 @@
     tweet_list = Fritter.TweetListCtrl(tweeter, $("#tweet_list"));
     Fritter.MakeTweetCtrl(tweeter, tweet_list, $("#div_make_tweet"));
     Fritter.LogoutButtonCtrl(authenticator, $("#div_logout_button"));
+    Fritter.UnreadMessageListener(function(unread_count) {
+      btn_messages.addClass("yellow-btn");
+      if (unread_count === 1) {
+        btn_messages.text("1 Unread Message");
+      } else {
+        bt_.messages.text(unread_count + " Unread Messages");
+      }
+    });
     btn_follow.click(function() {
       window.location.href = "/views/follow_page.html";
+    });
+    btn_messages.click(function() {
+      window.location.href = "/views/messages.html";
     });
     callback(null);
   };

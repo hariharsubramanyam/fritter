@@ -12,6 +12,7 @@
   var search_list;
 
   var btn_home;
+  var btn_messages;
 
   var txt_search_user;
   var btn_search_user;
@@ -34,6 +35,7 @@
 
   var setup_variables = function(callback) {
     btn_home = $("#btn_home");
+    btn_messages = $("#btn_messages");
     follower_list = $("#follower_list");
     followed_list = $("#followed_list");
     search_list = $("#search_list");
@@ -44,8 +46,19 @@
 
   var setup_views = function(callback) {
     Fritter.LogoutButtonCtrl(authenticator, $("#div_logout_button"));
+    Fritter.UnreadMessageListener(function(unread_count) {
+      btn_messages.addClass("yellow-btn");
+      if (unread_count === 1) {
+        btn_messages.text("1 Unread Message");
+      } else {
+        bt_.messages.text(unread_count + " Unread Messages");
+      }
+    });
     btn_home.click(function() {
       window.location.href = "/";
+    });
+    btn_messages.click(function() {
+      window.location.href = "/views/messages.html";
     });
     btn_search_user.click(function() {
       search.search(txt_search_user.val(), function(err, results) {
