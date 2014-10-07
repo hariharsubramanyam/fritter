@@ -1,16 +1,98 @@
 // This file defines a basic route template which should be used when creating new routes.
 var express = require("express");
 var async = require("async");
-var UserAuth = require("../models/user_auth").UserAuth;
 var Session = require("../models/session").Session;
 var Follow = require("../models/follow").Follow;
 var constants = require("../models/constants");
 var route_helper = require("./route_helper");
 var send_error = route_helper.send_error;
 var send_response = route_helper.send_response;
-var bcrypt = require("bcrypt");
 var router = express.Router();
 var mongoose;
+
+/**
+ * Gets the followers for the current user.
+ *
+ * @param req - POST body must have a session_id.
+ * @param res - Result is 
+ * {
+ *  error: null (or an error if there is an error),
+ *  result: [...] (the followers)
+ * }
+ */
+router.post("/followers", function(req, res) {
+  async.waterfall([
+    // Step 1: Ensure that the session id is in the POST body.
+    function(callback) {
+      var session_id = req.body.session_id;
+      if (session_id === undefined) {
+        send_error(res, "The POST body must have a session_id");
+      } else {
+        callback(null, session_id);
+      }
+    },
+    // Step 2: Get the username of the user.
+    function(session_id, callback) {
+      Session.find({"_id": new mongoose.Types.ObjectId(session_id)}, function(err, results) {
+        if (err) send_error(res, err);
+        if (results.length === 0) {
+          send_error(res, "There is no user with the given session_id");
+        } else {
+          callback(null, results[0].username);
+        }
+      });
+    },
+    // Step 3: Find all the follow relationships where user is the followed. 
+    function(username, callback) {
+      Follow.find({"follower": username}, function(err, results) {
+        if (err) send_error(res, err);
+        send_response(res, results);
+      });
+    }
+  ]);
+});
+
+/**
+ * Gets the users that this user follows.
+ *
+ * @param req - POST body must have a session_id.
+ * @param res - Result is 
+ * {
+ *  error: null (or an error if there is an error),
+ *  result: [...] (the followers)
+ * }
+ */
+router.post("/followed", function(req, res) {
+  async.waterfall([
+    // Step 1: Ensure that the session id is in the POST body.
+    function(callback) {
+      var session_id = req.body.session_id;
+      if (session_id === undefined) {
+        send_error(res, "The POST body must have a session_id");
+      } else {
+        callback(null, session_id);
+      }
+    },
+    // Step 2: Get the username of the user.
+    function(session_id, callback) {
+      Session.find({"_id": new mongoose.Types.ObjectId(session_id)}, function(err, results) {
+        if (err) send_error(res, err);
+        if (results.length === 0) {
+          send_error(res, "There is no user with the given session_id");
+        } else {
+          callback(null, results[0].username);
+        }
+      });
+    },
+    // Step 3: Find all the follow relationships where user is the followed. 
+    function(username, callback) {
+      Follow.find({"follower": username}, function(err, results) {
+        if (err) send_error(res, err);
+        send_response(res, results);
+      });
+    }
+  ]);
+});
 
 /**
  * Makes a user follow another user.
@@ -89,4 +171,3 @@ module.exports.initialize = function(_mongoose) {
   mongoose = _mongoose;
   return router;
 }
-
