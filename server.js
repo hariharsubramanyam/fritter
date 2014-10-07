@@ -14,11 +14,7 @@ mongoose.connect(process.env.OPENSHIFT_MONGODB_DB_URL || constants.MONGO_URL);
 
 // These are all the routes I've defined.
 var auth_route = require('./routes/auth').initialize(mongoose);
-var make_tweet_route = require('./routes/make_tweet').initialize(mongoose);
-var get_all_tweets_route = require('./routes/get_all_tweets').initialize(mongoose);
-var tweets_since_date_route = require('./routes/tweets_since_date').initialize(mongoose);
-var edit_tweet_route = require('./routes/edit_tweet').initialize(mongoose);
-var delete_tweet_route = require('./routes/delete_tweet').initialize(mongoose);
+var tweet_route = require('./routes/tweet').initialize(mongoose);
 var follow_route = require('./routes/follow').initialize(mongoose);
 
 var app = express();
@@ -36,11 +32,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // This is where all the routes are set up.
 app.use('/auth', auth_route);
-app.use('/tweets', make_tweet_route);
-app.use('/tweets', get_all_tweets_route);
-app.use('/tweets', tweets_since_date_route);
-app.use('/tweets', edit_tweet_route);
-app.use('/tweets', delete_tweet_route);
+app.use('/tweets', tweet_route);
 app.use('/follow', follow_route);
 
 /// catch 404 and forward to error handler
