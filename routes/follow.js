@@ -211,6 +211,63 @@ router.post("/delete", function(req, res) {
   ]);
 });
 
+/**
+ * Get the usernames of all the followers of the user who the user also follows.
+ *
+ * @param req - POST body must contain session_id.
+ * @param res - Returns 
+ * {
+ *  error: null, unless there is an error
+ *  result: [...] (array of usernames of friends)
+ * }
+ */
+router.post("/friends", function(req, res) {
+  async.waterfall([
+    // Step 1: Ensure that the session id is in the POST body.
+    function(callback) {
+      var session_id = req.body.session_id;
+      if (session_id === undefined) {
+        send_error(res, "The POST body must have a session_id");
+      } else {
+        callback(null, session_id);
+      }
+    },
+    // Step 2: Get the username of the user.
+    function(session_id, callback) {
+      Session.find({"_id": new mongoose.Types.ObjectId(session_id)}, function(err, results) {
+        if (err) send_error(res, err);
+        if (results.length === 0) {
+          send_error(res, "There is no user with the given session_id");
+        } else {
+          callback(null, results[0].username);
+        }
+      });
+    },
+    // Step 3: Find all the follow relationships where user is the followed. 
+    function(username, callback) {
+      Follow.find({"followed": username}, function(err, results) {
+        if (err) send_error(res, err);
+        var followers = [];
+        for (var i = 0; i < results.length; i++) {
+          followers.push(results[i].follower);
+        }
+        callback(null, username, followers);
+      });
+    },
+    // Step 4: Given the followers, find all the relationship where following is mutual. 
+    function(username, followers, callback) {
+      Follow.find().and([{"follower": username}, {"followed": {"$in": followers}}]).exec(function(err, results) {
+        if (err) send_error(res, err);
+        var friends = [];
+        for (var i = 0; i < results.length; i++) {
+          friends.push(results[i].followed);
+        }
+        send_response(res, friends);
+      });
+    }
+  ]);
+});
+
 module.exports.initialize = function(_mongoose) {
   mongoose = _mongoose;
   return router;

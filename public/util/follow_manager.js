@@ -98,9 +98,29 @@
       });
     };
 
+    /**
+     * Returns the friends of the current user (i.e. user follows them, they follow user).
+     *
+     * @param callback - Executed as callback(err, result) where result is the array of usernames
+     * of friends.
+     */
+    var get_friends = function(callback) {
+      $.post("/follow/friends", {
+        "session_id": $.cookie("session_id")
+      }, function(data) {
+        data = JSON.parse(data);
+        if (data.error) {
+          callback(data.error);
+        } else {
+          callback(null, data.result);
+        }
+      });
+    };
+
     var that = {};
     that.get_followed = get_followed;
     that.get_followers = get_followers;
+    that.get_friends = get_friends;
     that.follow = follow;
     that.unfollow = unfollow;
     return that;
