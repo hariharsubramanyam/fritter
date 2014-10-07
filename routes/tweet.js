@@ -2,6 +2,7 @@ var express = require("express");
 var async = require("async");
 var Session = require("../models/session").Session;
 var Tweet = require("../models/tweet").Tweet;
+var Follow = require("../models/follow").Follow;
 var route_helper = require("./route_helper");
 var send_error = route_helper.send_error;
 var send_response = route_helper.send_response;
@@ -231,6 +232,64 @@ router.get("/all", function(req, res) {
     // Step 1: Return all the tweets.
     function(callback) {
       Tweet.find({}).sort("created").exec(function(err, results) {
+        if (err) send_error(res, err);
+        send_response(res, results);
+      });
+    }
+  ]);
+});
+
+/**
+ * Returns all the tweets of the people this user follows (and the user him/herself)  sorted by date.
+ *
+ * @param req - POST body must contain a session_id.
+ * @param res - Returns 
+ * {
+ *  error: the error, or null if there is no error.
+ *  result: [...] (the array of tweet objects)
+ * }
+ */
+router.post("/followed", function(req, res) {
+  async.waterfall([
+    // Step 1: Get the session_id from the POST body.
+    function(callback) {
+      var session_id = req.body.session_id;
+      if (session_id === undefined) {
+        send_error(res, "POST body needs a session_id");
+      } else {
+        callback(null, session_id);
+      }
+    },
+    // Step 2: Get the username for the session_id.
+    function(session_id, callback) {
+      Session.find({"_id": new mongoose.Types.ObjectId(session_id)}, function(err, results) {
+        if (err) send_error(res, err);
+        if (results.length === 0) {
+          send_error(res, "There is no user with the given session_id");
+        } else {
+          callback(null, results[0].username);
+        }
+      });
+    },
+    // Step 3: Get all the followed users for given username.
+    function(username, callback) {
+      Follow.find({"follower": username}, function(err, results) {
+        if (err) send_error(res, err);
+        callback(null, username, results);
+      });
+    },
+    // Step 4: Create an array of usernames.
+    function(username, results, callback) {
+      var usernames = [username];
+      for (var i = 0; i < results.length; i++) {
+        usernames.push(results[i].followed);
+      }
+      callback(null, usernames);
+    },
+    // Step 5: Return the tweets of the followed users and the user him/herself.
+    function(usernames, callback) {
+      console.log(usernames);
+      Tweet.find({"username": {"$in": usernames}}).sort("created").exec(function(err, results) {
         if (err) send_error(res, err);
         send_response(res, results);
       });
