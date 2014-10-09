@@ -2,6 +2,7 @@
   <span class="tweet-username">
     <strong><%= tweet.username %></strong>
   </span>
+  <p><%= new Date(tweet.created).toLocaleString() %> </p>
   <% if(just_made || tweeter.is_my_tweet(tweet._id.toString())) { %>
     <button class="pretty-button yellow-btn edit_tweet_button">Edit Tweet</button> 
     <button class="pretty-button red-btn delete_tweet_button">Delete Tweet</button> 

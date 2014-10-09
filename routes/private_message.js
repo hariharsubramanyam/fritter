@@ -223,6 +223,66 @@ router.post("/unread_names", function(req, res) {
     }
   ]);
 });
+
+/**
+ * Get all messages from the given user.
+ *
+ * @param req - POST body must have a session_id and a sender.
+ * @parma res - Of the form:
+ * {
+ *  error: null, unless there is an error,
+ *  result: [...] Array of messages
+ * }
+ * Each entry of result looks like:
+ * {
+ *  _id: ObjectId of message
+ *  sender: username of sender,
+ *  recipient: username of recipient,
+ *  created: date that the message was created,
+ *  content: the string content of the message.
+ * }
+ */
+router.post("/from", function(req, res) {
+  async.waterfall([
+    // Step 1: Ensure that a session_id sender exists in the POST body.
+    function(callback) {
+      var session_id = req.body.session_id;
+      var sender = req.body.sender;
+      if (session_id === undefined || sender === undefined) {
+        send_error(res, "There must be a session_id and sender in the POST body");
+      } else {
+        callback(null, session_id, sender);
+      }
+    },
+    // Step 2: Get the username for the session_id.
+    function(session_id, sender, callback) {
+      Session.find({"_id": new mongoose.Types.ObjectId(session_id)}, function(err, results) {
+        if (err) send_error(res, err);
+        if (results.length !== 1) {
+          send_error(res, "Found zero, or more than 1 session with the given id");
+        } else {
+          callback(null, results[0].username, sender);
+        }
+      });
+    },
+    // Step 3: Mark all messages where the user is the recipient as read, because they are being sent to the user.
+    function(username, sender, callback) {
+      PrivateMessage.update({"recipient": username, "sender": sender}, {"unread": false}, {"multi": true}, function(err, result) {
+        if (err) send_error(res, err);
+        callback(null, username, sender);
+      });
+    },
+    // Step 4: Get all the messages where this user is involved.
+    function(username, sender, callback) {
+      PrivateMessage.find().or([{"sender": sender, "recipient": username}, {"sender": username, "recipient": sender}]).sort("-created").exec(
+      function(err, results){
+        if (err) send_error(res, err);
+        send_response(res, results);
+      });
+    }
+  ]);
+});
+
 module.exports.initialize = function(_mongoose) {
   mongoose = _mongoose;
   return router;

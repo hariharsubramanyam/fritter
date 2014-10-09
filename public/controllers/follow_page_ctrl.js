@@ -82,7 +82,7 @@
       html = $(html);
       if (followed_users[results[i].username] === undefined) {
         var btn_follow = html.find(".btn_follow");
-        (function(username) {
+        (function(username, html) {
           btn_follow.click(function() {
             follow_manager.follow(username, function(err, result) {
               if (err) console.log(err);
@@ -91,10 +91,10 @@
               add_to_list(result, false); 
             });
           });
-        })(results[i].username);
+        })(results[i].username, html);
       } else {
         var btn_unfollow = html.find(".btn_unfollow");
-        (function(username) {
+        (function(username, html) {
           btn_unfollow.click(function() {
             follow_manager.unfollow(username, function(err, result) {
               if (err) console.log(err);
@@ -104,7 +104,7 @@
               followed_users[username] = undefined;
             });
           });
-        })(results[i].username);
+        })(results[i].username, html);
       }
       search_list.append(html);
     }

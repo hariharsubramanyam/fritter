@@ -22,6 +22,11 @@
     </div>
 
     <div id="message_div">
+      <ul> 
+        <li>Click one of the usernames to view your conversation with them.</li>
+      </ul>
+      <textarea id="txt_message" class="pretty-input"></textarea>
+      <button id="btn_send_message" class="pretty-button green-btn" >Send</button>
     </div>
     <script src="/libs/async.js"></script>
     <script src="/libs/ejs.js"></script>
@@ -31,6 +36,8 @@
     <script src="/util/auth.js"></script>
     <script src="/util/tweeter.js"></script>
     <script src="/util/follow_manager.js"></script>
+    <script src="/util/unread_message_listener.js"></script>
+    <script src="/util/messages_handler.js"></script>
     <script src="/controllers/logout_button_ctrl.js"></script>
     <script src="/controllers/login_check_ctrl.js"></script>
     <script src="/controllers/messages_page_ctrl.js"></script>

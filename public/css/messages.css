@@ -65,3 +65,24 @@ body {
 #btn_home {
   float: left;
 }
+
+#message_div textarea {
+  margin-bottom: 0px; 
+  width: 99%; 
+  resize: none; 
+  height:20%;
+}
+
+#message_div button {
+  float: right;
+  height: 5%;
+}
+
+#message_div ul {
+  width: 99%;
+  height: 65%;
+  list-style: none;
+  padding: 0;
+  margin-left: 10px;
+  overflow-y: scroll;
+}

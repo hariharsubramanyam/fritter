@@ -87,3 +87,10 @@ body {
 #div_tweet_alert {
   margin-bottom: 10px;
 }
+
+#tweet_list p {
+  font-size: 10pt;
+  margin-left: 10px;
+  margin-bottom: 0px;
+  margin-top: 5px;
+}
