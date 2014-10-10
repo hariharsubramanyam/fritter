@@ -7,7 +7,6 @@
  * delete - Makes a user unfollow another user.
  * friends - Returns the usernames of all the followers of the user who the user also follows.
  */
- */
 var express = require("express");
 var async = require("async");
 var Session = require("../models/session").Session;
