@@ -54,13 +54,13 @@ Or to run the server locally, do the following:
 
 ## Highlights
 
-The first highlight is that this project as a Single-Page Application which fetches JSON data from a REST API. This way, the client and server code is nicely separated. For instance, all the client side code is in the `public/` directory and all the server side code is in `server.js`, `models/`, `routes/`, and `views/`.
+The first highlight is that this project as a Single-Page Application which fetches JSON data from a REST API. This way, the client and server code is nicely separated. For instance, all the client side code is in the `public/` directory and all the server side code is in `server.js`, `models/`, `routes/`, and `views/`. Thus, the only thing that connects the client and the server are a few objects responsible for communicating with the API. For example, see [these lines in `public/util/follow_manager.js`](https://github.com/6170-fa14/hsubrama_proj2/blob/master/public/util/search.js#L12-L23) for an example of such an object.
 
 Another highlight is that I use the Model-View-Controller design pattern effectively. 
 
 On the server side, the controllers are in the `routes/` directory, the models are in the `models/` directory, and the views (there is only one, since most of the view work is handled by the client) are in the `views/` directory.
 
-On the client side, the controllers are in the `controllers/` directory, the models (i.e. the code connecting to the API) are in the `util/` directory, and the views are in the `views/` directory.
+On the client side, the controllers are in the `controllers/` directory, the models (i.e. the code connecting to the API) are in the `util/` directory, and the views are in the `views/` directory. The views are in EJS, and they are rendered on the client side. This way, we can create DOM elements on the fly (on the client side) and avoid mucking up our Javascript with HTML. This also lets us pass JavaScript objects to the EJS object for rendering in the HTML. For example, see this [these lines of `public/views/search_result.ejs`](https://github.com/6170-fa14/hsubrama_proj2/blob/master/public/views/search_result.ejs#L2-L6) for an example of how we can use client side EJS to decide whether to show a follow or unfollow button.
 
 The final highlight is that the API endpoints are very simple, which makes the URLs clean and easy to remember. You can find them in the `routes/` directory. The endpoints are:
 
