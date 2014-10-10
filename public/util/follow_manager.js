@@ -1,3 +1,6 @@
+/**
+ * Class for communicating with following API.
+ */
 (function() {
   var FollowManager = function() {
 

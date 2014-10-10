@@ -1,5 +1,6 @@
-// This file defines the Tweeter class which interacts with the API for managing tweets.
-
+/**
+ * Class for communicating with the tweets API.
+ */
 (function() {
   var Tweeter = function(authenticator) {
 

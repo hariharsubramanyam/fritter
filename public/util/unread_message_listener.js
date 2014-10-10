@@ -1,3 +1,6 @@
+/**
+ * Executes a function every time an unread message comes in.
+ */
 (function() {
   /**
    * @param callback - The callback to trigger whenever there are unread messages, executed as

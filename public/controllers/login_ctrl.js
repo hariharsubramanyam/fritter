@@ -1,3 +1,6 @@
+/**
+ * This is the controller for the /views/login_page.html where the user can login or register.
+ */
 (function() {
   // The text field which contains the username for registration.
   var reg_username;
@@ -58,12 +61,18 @@
     callback(null);
   }; 
 
+  /**
+   * Give functionality to the buttons.
+   */
   var setup_handlers = function(callback) {
     btn_login.click(btn_login_handler);
     btn_register.click(btn_register_handler);
     callback(null);
   };
 
+  /**
+   * Attempt to login the user.
+   */
   var btn_login_handler = function() {
       var username = log_username.val();
       var password = log_password.val();
@@ -76,6 +85,9 @@
       });
   };
 
+  /**
+   * Attempt the register the user.
+   */
   var btn_register_handler = function() {
     var username = reg_username.val();
     var password = reg_password.val();
@@ -93,15 +105,23 @@
     } // End else (i.e. usernames and passwords are good).
   };
 
+  /**
+   * Display an error message.
+   */
   var display_alert = function(message) {
     p_alert.text(message);
     clearTimeout(alert_timeout);
     div_alert.css("visibility", "visible");
+
+    // Hide the alert after 5 seconds.
     alert_timeout = setTimeout(function() {
       div_alert.css("visibility", "hidden");
     }, 5000);
   };
 
+  /**
+   * If the user has been successfully authenticated, take them to the home page.
+   */
   var successful_auth = function() {
     window.location.href = "/";
   };

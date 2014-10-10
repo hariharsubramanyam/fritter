@@ -1,6 +1,6 @@
-// This file creates the Authenticator class, which communicates with the backend API to do
-// authentication.
-
+/**
+ * Class for communicating with authentication API.
+ */
 (function() {
   var Authenticator = function() {
     /**

@@ -7,17 +7,23 @@
     // Object where the keys are the tweet ids (the values are all true).
     // We use an object because we can lookup keys in constant time.
     var tweet_for_id = {};
+
+    // Add the tweet to the lsit of tweets.
     var add_to_list = function(tweet, just_made) {
+      // Create the html for the tweet.
       var html = new EJS({"url": "/views/tweet_list_item_view.ejs"}).render({
         "tweeter": tweeter,
         "just_made": just_made,
         "tweet": tweet
       });
       html = $(html);
+
+      // Set the tweet content.
       var tweet_content = html.find(".tweet-content");
       tweet_content.val("");
       tweet_content.val(tweet.content);
       if (just_made || tweeter.is_my_tweet(tweet._id.toString())) {
+        // Add an edit and delete button if this is the current user's  tweet.
         var edit_button = html.find(".edit_tweet_button");
         var delete_button = html.find(".delete_tweet_button");
         delete_button.click(function() {
