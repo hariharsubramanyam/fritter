@@ -1,3 +1,17 @@
+/**
+ * This file defines the routes for getting, making, deleting, and editing tweets.
+ *
+ * The routes defined are:
+ * since/:date - Gets all the tweets since a given date, sorted by date 
+ *               in descending order (latest tweet first).
+ * make - Makes a tweet.
+ * delete - Deletes a tweet.
+ * edit - Edits a tweet. 
+ * all - Returns all the tweets sorted by date.
+ * followed - Returns all the tweets of the people this user 
+ *            follows (and the user him/herself)  sorted by date.
+ */
+
 var express = require("express");
 var async = require("async");
 var Session = require("../models/session").Session;
@@ -20,6 +34,13 @@ var TWEET_LENGTH = 140;
  * {
  *  error: An error, or null,
  *  result: [...] (the tweets sorted by creation date in descending order);
+ * }
+ *
+ * Each tweet takes the form:
+ * {
+ *  username: The username of the user who made the tweet.
+ *  content: The text content of the tweet.
+ *  created: The date the tweet was created.
  * }
  */
 router.get("/since/:date", function(req, res) {
@@ -49,7 +70,7 @@ router.get("/since/:date", function(req, res) {
 /**
  * Makes a tweet.
  *
- * @param req - POST body needs session_id and tweet.
+ * @param req - POST body needs 'session_id' and 'tweet'.
  * @param res - The response will be:
  * {
  *  error: The error, or null if there is no error.
@@ -225,6 +246,13 @@ router.post("/edit", function(req, res) {
  * {
  *  error: the error, or null if there is no error.
  *  result: [...] (the array of tweet objects)
+ * }
+ *
+ * Each tweet takes the form:
+ * {
+ *  username: The username of the user who made the tweet.
+ *  content: The text content of the tweet.
+ *  created: The date the tweet was created.
  * }
  */
 router.get("/all", function(req, res) {

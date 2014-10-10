@@ -1,4 +1,8 @@
-// This file defines a basic route template which should be used when creating new routes.
+/**
+ * This file defines routes for searching users.
+ *
+ * users - Search for the users with the given search query.
+ */
 var express = require("express");
 var async = require("async");
 var UserAuth = require("../models/user_auth").UserAuth;
@@ -11,10 +15,10 @@ var mongoose;
 /**
  * Search for the users with the given search query.
  *
- * @param req - POST body must have search.
+ * @param req - POST body must have 'search'.
  * @param res - Returns {
  *  error: null, unless there is an error,
- *  result: [...]
+ *  result: [...] (array of usernames whose name contains the given search query).
  * }
  */
 router.post("/users", function(req, res) {

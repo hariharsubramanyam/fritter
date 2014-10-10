@@ -1,3 +1,13 @@
+/**
+ * This file defines the routes for managing following. The routes are:
+ * 
+ * followers - Returns the follow relationships where the user is the followed.
+ * followed - Returns the follow relationships where the user is the follower.
+ * make - Makes a user follow another user.
+ * delete - Makes a user unfollow another user.
+ * friends - Returns the usernames of all the followers of the user who the user also follows.
+ */
+ */
 var express = require("express");
 var async = require("async");
 var Session = require("../models/session").Session;
@@ -10,13 +20,19 @@ var router = express.Router();
 var mongoose;
 
 /**
- * Gets the followers for the current user.
+ * Returns the follow relationships where the user is the followed.
  *
- * @param req - POST body must have a session_id.
+ * @param req - POST body must have a 'session_id'.
  * @param res - Result is 
  * {
  *  error: null (or an error if there is an error),
- *  result: [...] (the followers)
+ *  result: [...] (the follow relationships where the user is the followed)
+ * }
+ *
+ * Each follow relationship takes the form:
+ * {
+ *  follower: username of the follower.
+ *  followed: username of the followed.
  * }
  */
 router.post("/followers", function(req, res) {
@@ -52,13 +68,19 @@ router.post("/followers", function(req, res) {
 });
 
 /**
- * Gets the users that this user follows.
+ * Returns the follow relationships where the user is the follower.
  *
- * @param req - POST body must have a session_id.
+ * @param req - POST body must have a 'session_id'.
  * @param res - Result is 
  * {
  *  error: null (or an error if there is an error),
  *  result: [...] (the followers)
+ * }
+ *
+ * Each follow relationship takes the form:
+ * {
+ *  follower: username of the follower.
+ *  followed: username of the followed.
  * }
  */
 router.post("/followed", function(req, res) {
@@ -96,7 +118,7 @@ router.post("/followed", function(req, res) {
 /**
  * Makes a user follow another user.
  *
- * @param req - POST body needs "session_id" of the follower and the "followed" username.
+ * @param req - POST body needs 'session_id' of the follower and the 'followed' username.
  * @param res - The response will be:
  * {
  *  error: The error, or null if there is no error.
@@ -167,7 +189,7 @@ router.post("/make", function(req, res) {
 });
 
 /**
- * Unfollows a user from another user.
+ * Makes a user unfollow another user.
  *
  * @param req - POST body needs "session_id" of the follower and the "followed" username.
  * @param res - The response will be:

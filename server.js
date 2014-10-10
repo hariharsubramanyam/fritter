@@ -8,11 +8,16 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
+/*
+ * Connect to the database.
+ */
 var constants = require("./models/constants");
 var mongoose = require("mongoose");
 mongoose.connect(process.env.OPENSHIFT_MONGODB_DB_URL || constants.MONGO_URL);
 
-// These are all the routes I've defined.
+/*
+ * Define the routes.
+ */
 var auth_route = require('./routes/auth').initialize(mongoose);
 var tweet_route = require('./routes/tweet').initialize(mongoose);
 var follow_route = require('./routes/follow').initialize(mongoose);
@@ -32,7 +37,9 @@ app.use(bodyParser.urlencoded());
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-// This is where all the routes are set up.
+/*
+ * Set up the routes.
+ */
 app.use('/auth', auth_route);
 app.use('/tweets', tweet_route);
 app.use('/follow', follow_route);

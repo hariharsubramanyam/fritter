@@ -1,3 +1,12 @@
+/**
+ * This file defines the routes for authentication.
+ *
+ * login - Logs the user in.
+ * register - Registers a new user.
+ * validate_session - Ensures that the session id is valid.
+ * logout - Logs the user out.
+ */
+
 var express = require("express");
 var async = require("async");
 var UserAuth = require("../models/user_auth").UserAuth;
@@ -11,8 +20,13 @@ var router = express.Router();
 var mongoose;
 
 /**
- * @param req - The body must include username and password field.
- * @param res - The result is the session_id
+ * Logs a user in.
+ * @param req - POST body must include a 'username' and 'password'.
+ * @param res - The result is: 
+ * {
+ *  error: An error message, or null if there is no error.
+ *  result: The session id string (if there is no error).
+ * }
  */
 router.post("/login", function(req, res) {
   async.waterfall([
@@ -66,13 +80,16 @@ router.post("/login", function(req, res) {
       });
     }
   ]);
-}); // End login.
+}); 
 
 /**
- * @param req - The body must include username and password field.
- * @param res - Result is {
- *  error: An error or null,
- *  result: The session_id.
+ * Registers a new user.
+ *
+ * @param req - The POST body must contain a 'username' and 'password'.
+ * @param res - Result is 
+ * {
+ *  error: An error message (or null if there is no error).
+ *  result: The session_id string (if there is no error).
  * }
  */
 router.post("/register", function(req, res) {
@@ -127,16 +144,17 @@ router.post("/register", function(req, res) {
         send_response(res, result._id.toString());
       });
     }
-  ]); // End waterfall.
-}); // End register.
+  ]); 
+}); 
 
 /**
- * @param req - Must contain a session_id in body
- * @param res - Returns
+ * Validates a given session id.
  *
+ * @param req - The post body must contain a 'session_id'
+ * @param res - Returns
  * {
- *  error: An error or null if there is no error.
- *  result: The username associated with this session.
+ *  error: An error message (or null if there is no error)
+ *  result: The username associated with this session id (if there is no error).
  * }
  */
 router.post("/validate_session", function(req, res) {
@@ -166,11 +184,17 @@ router.post("/validate_session", function(req, res) {
       }
     }
   ]);
-}); // End validate_session.
+}); 
 
 /**
- * @param req - Must contain session_id in body.
- * @param res - Result is true if the logout was successful.
+ * Logs a user out.
+ *
+ * @param req - The request body must contain a 'session_id'
+ * @param res - The result is 
+ * {
+ *  error: The error message (or null if there is no error)
+ *  result: true (if there is no error).
+ * }
  */
 router.post("/logout", function(req, res) {
   async.waterfall([
@@ -195,7 +219,7 @@ router.post("/logout", function(req, res) {
       }
     }
   ]);
-}); // End logout.
+}); 
 
 module.exports.initialize = function(_mongoose) {
   mongoose = _mongoose;

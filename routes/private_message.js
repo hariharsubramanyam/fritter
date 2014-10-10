@@ -1,3 +1,16 @@
+/**
+ * This file defines the routes for sending and retrieving private messages (i.e. messages from 
+ * one user to another).
+ *
+ * The routes are:
+ * mine - Get all messages where this user is involved.
+ * send - Send a message to a user.
+ * unread - Get the number of unread messages.
+ * unread_names - Get the usernames of the users have have sent unread messages.
+ * from - Get all messages from the given user.
+ *
+ *
+ */
 var express = require("express");
 var async = require("async");
 var Session = require("../models/session").Session;
@@ -70,8 +83,8 @@ router.post("/mine", function(req, res) {
 /**
  * Send a message to a user.
  *
- * @param req - The POST body must contain the session_id of the sender, the username of the
- *              recipient, and the string content of the message
+ * @param req - The POST body must contain the 'session_id' of the sender, the 'username' of the
+ *              recipient, and the string 'content' of the message
  * @param res - Returns the message, of the form
  * {
  *  error: null, unless there is an error,
@@ -139,7 +152,7 @@ router.post("/send", function(req, res) {
 /**
  * Get the number of unread messages.
  *
- * @param req - POST body must have a session_id
+ * @param req - POST body must have a 'session_id'
  * @parma res - Of the form:
  * {
  *  error: null, unless there is an error,
@@ -181,11 +194,12 @@ router.post("/unread", function(req, res) {
 /**
  * Get the usernames of the users have have sent unread messages.
  *
- * @param req - POST body must have a session_id
+ * @param req - POST body must have a 'session_id'
  * @parma res - Of the form:
  * {
  *  error: null, unless there is an error,
- *  result: the number of unread messages
+ *  result: [...] (array of usernames of users who ahve sent unread messages to the user with
+ *                 the given session id).
  * }
  */
 router.post("/unread_names", function(req, res) {
@@ -227,7 +241,7 @@ router.post("/unread_names", function(req, res) {
 /**
  * Get all messages from the given user.
  *
- * @param req - POST body must have a session_id and a sender.
+ * @param req - POST body must have a 'session_id and a 'sender'.
  * @parma res - Of the form:
  * {
  *  error: null, unless there is an error,
