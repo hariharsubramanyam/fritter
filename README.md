@@ -9,7 +9,7 @@ For this version of Fritter, I have implemented the ability to follow other user
 
 ## Design Document
 
-See [DesignDoc.pdf](http://www.google.com) at the root of the project repo.
+See [DesignDoc.pdf](https://github.com/6170-fa14/hsubrama_proj2/blob/master/DesignDoc.pdf?raw=true) at the root of the project repo.
 
 ## Demo
 
