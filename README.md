@@ -1,15 +1,9 @@
-Project 2 - Fritter
+Fritter - A Twitter Clone
 ============
-
-# Grading Instructions
 
 ## Overview
 
-For this version of Fritter, I have implemented the ability to follow other users. I have also added a feature that allows users to **send private messages to their friends** (two users are considered friends if they follow each other). Both features required additions to my data model.
-
-## Design Document
-
-See [DesignDoc.pdf](https://github.com/6170-fa14/hsubrama_proj2/blob/master/DesignDoc.pdf?raw=true) at the root of the project repo.
+Fritter is a simple Twitter clone built with node.js.
 
 ## Demo
 
@@ -17,9 +11,7 @@ Here is a video [demo](http://youtu.be/qM0cn2Haad0) of the app.
 
 ## Usage
 
-1. Navigate to [fritter-hariharfritter.rhcloud.com/](http://fritter-hariharfritter.rhcloud.com/)
-
-Or to run the server locally, do the following:
+To run the server locally, do the following:
 
 1. Install dependencies with `npm install`
 2. Start mongodb with `sudo mongod`
@@ -51,49 +43,6 @@ Or to run the server locally, do the following:
 3.	This will take you to the messages page.
 4.	There is a toolbar on the left labeled **Friends**, it lists all your friends. If you don’t have any friends, you’ll need to follow a user and get them to follow you back (if you’re testing the app, you can create two users and make them follow each other)
 5.	When you select a user, you can type a message into the **textarea** and click **Send** to send the message
-
-## Highlights
-
-The first highlight is that this project as a Single-Page Application which fetches JSON data from a REST API. This way, the client and server code is nicely separated. For instance, all the client side code is in the `public/` directory and all the server side code is in `server.js`, `models/`, `routes/`, and `views/`. Thus, the only thing that connects the client and the server are a few objects responsible for communicating with the API. For example, see [these lines in `public/util/follow_manager.js`](https://github.com/6170-fa14/hsubrama_proj2/blob/master/public/util/search.js#L12-L23) for an example of such an object.
-
-Another highlight is that I use the Model-View-Controller design pattern effectively. 
-
-On the server side, the controllers are in the `routes/` directory, the models are in the `models/` directory, and the views (there is only one, since most of the view work is handled by the client) are in the `views/` directory.
-
-On the client side, the controllers are in the `controllers/` directory, the models (i.e. the code connecting to the API) are in the `util/` directory, and the views are in the `views/` directory. The views are in EJS, and they are rendered on the client side. This way, we can create DOM elements on the fly (on the client side) and avoid mucking up our Javascript with HTML. This also lets us pass JavaScript objects to the EJS object for rendering in the HTML. For example, see this [these lines of `public/views/search_result.ejs`](https://github.com/6170-fa14/hsubrama_proj2/blob/master/public/views/search_result.ejs#L2-L6) for an example of how we can use client side EJS to decide whether to show a follow or unfollow button.
-
-The final highlight is that the API endpoints are very simple, which makes the URLs clean and easy to remember. You can find them in the `routes/` directory. The endpoints are:
-
-### Authentication
-1. `auth/login`
-2. `auth/register`
-3. `auth/validate_session`
-4. `auth/logout`
-
-### Following
-1. `follow/followers`
-2. `follow/followed`
-3. `follow/friends`
-4. `follow/make`
-5. `follow/delete`
-
-### Search
-1. `search/users`
-
-### Tweets
-1. `tweets/since/:date`
-2. `tweets/make`
-3. `tweets/delete`
-4. `tweets/edit`
-5. `tweets/all`
-6. `tweets/followed`
-
-### Messages
-1. `messages/mine`
-2. `messages/send`
-3. `messages/unread`
-4. `messages/unread_names`
-5. `messages/from`
 
 # Author
 Harihar Subramanyam (hsubrama@mit.edu)
